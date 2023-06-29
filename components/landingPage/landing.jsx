@@ -1,12 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 const Landing = () => {
+  const [showButtons, setShowButtons] = useState(false);
+
+  const toggleButtons = () => {
+    setShowButtons(!showButtons);
+  };
+
   return (
     <View style={styles.container}>
       <Image
-        source={require("../../assets/water_background.png")}
+        source={require("../../assets/background.png")}
         style={styles.background}
       />
       <View style={[styles.background, styles.overlay]} />
@@ -22,63 +28,73 @@ const Landing = () => {
       </View>
 
       <View style={styles.buttonContainer}>
-        {/* Button 1 */}
-        <TouchableOpacity
-          onPress={() => {
-            // handle onPress
-          }}
-          style={styles.btn}
-        >
-          <View style={styles.btnSecondary}>
-            <MaterialCommunityIcons
-              color="#000"
-              name="email-fast-outline"
-              size={18}
-              style={{ marginRight: 12 }}
-            />
-            <Text style={styles.btnSecondaryText}>Email</Text>
-            <View style={{ width: 24 }} />
-          </View>
-        </TouchableOpacity>
+        {showButtons && (
+          <>
+            {/* Button 1 */}
+            <TouchableOpacity
+              onPress={() => {
+                // handle onPress
+              }}
+              style={styles.btn}
+            >
+              <View style={styles.btnSecondary}>
+                <MaterialCommunityIcons
+                  color="#000"
+                  name="email-fast-outline"
+                  size={18}
+                  style={{ marginRight: 12 }}
+                />
+                <Text style={styles.btnSecondaryText}>Email</Text>
+                <View style={{ width: 12 }} />
+              </View>
+            </TouchableOpacity>
 
-        {/* Button 2 */}
-        <TouchableOpacity
-          onPress={() => {
-            // handle onPress
-          }}
-          style={styles.btn}
-        >
-          <View style={styles.btnSecondary}>
-            <MaterialCommunityIcons
-              color="#000"
-              name="google"
-              size={18}
-              style={{ marginRight: 12 }}
-            />
-            <Text style={styles.btnSecondaryText}>Google</Text>
-            <View style={{ width: 24 }} />
-          </View>
-        </TouchableOpacity>
+            {/* Button 2 */}
+            <TouchableOpacity
+              onPress={() => {
+                // handle onPress
+              }}
+              style={[styles.btn, { marginTop: 0 }]}
+            >
+              <View style={styles.btnSecondary}>
+                <MaterialCommunityIcons
+                  color="#000"
+                  name="google"
+                  size={18}
+                  style={{ marginRight: 12 }}
+                />
+                <Text style={styles.btnSecondaryText}>Google</Text>
+                <View style={{ width: 12 }} />
+              </View>
+            </TouchableOpacity>
 
-        {/* Button 3 */}
-        <TouchableOpacity
-          onPress={() => {
-            // handle onPress
-          }}
-          style={styles.btn}
-        >
-          <View style={styles.btnSecondary}>
-            <MaterialCommunityIcons
-              color="#000"
-              name="facebook"
-              size={18}
-              style={{ marginRight: 12 }}
-            />
-            <Text style={styles.btnSecondaryText}>Facebook</Text>
-            <View style={{ width: 24 }} />
-          </View>
-        </TouchableOpacity>
+            {/* Button 3 */}
+            <TouchableOpacity
+              onPress={() => {
+                // handle onPress
+              }}
+              style={[styles.btn, { marginBottom: 0 }]}
+            >
+              <View style={styles.btnSecondary}>
+                <MaterialCommunityIcons
+                  color="#000"
+                  name="facebook"
+                  size={18}
+                  style={{ marginRight: 12 }}
+                />
+                <Text style={styles.btnSecondaryText}>Facebook</Text>
+                <View style={{ width: 12 }} />
+              </View>
+            </TouchableOpacity>
+          </>
+        )}
       </View>
+
+      <TouchableOpacity onPress={toggleButtons} style={styles.toggleBtn}>
+        <Text style={styles.toggleBtnText}>
+          {showButtons ? "Hide Buttons" : "Show Buttons"}
+        </Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -120,9 +136,10 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flex: 1,
     justifyContent: "flex-end",
-    marginBottom: 63,
+    marginBottom: 0, // Adjust the spacing as needed
     width: "100%",
     alignItems: "center",
+    marginTop: -12,
   },
   btn: {
     flexDirection: "row",
@@ -135,7 +152,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderColor: "#000",
     marginBottom: 12,
-    width: "90%",
+    width: "80%",
   },
   btnSecondary: {
     flexDirection: "row",
@@ -148,6 +165,22 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     color: "#000",
     marginRight: 12,
+    textAlign: "center",
+  },
+  toggleBtn: {
+    marginTop: 20,
+    marginBottom: 30,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderWidth: 1,
+    borderRadius: 8,
+    backgroundColor: "white",
+    width: "80%", // Adjust the width as needed
+  },
+  toggleBtnText: {
+    fontSize: 18,
+    fontWeight: "600",
+    color: "#000",
     textAlign: "center",
   },
 });
