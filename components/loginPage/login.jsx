@@ -10,14 +10,19 @@ import {
 } from "react-native";
 import styles from "./login.style";
 import { TextInput } from "react-native-gesture-handler";
-//import styles from "./login.style";
+import { useNavigation } from "@react-navigation/native";
 
 const Login = () => {
+  const navigation = useNavigation();
   const [form, setForm] = useState({
     email: "",
     password: "",
   });
-
+  const handleSignIn = () => {
+    //Alert.alert("Sign in button clicked");
+    //navigation.navigate("Form");
+    navigation.navigate("FirstPage");
+  };
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#e8ecf4" }}>
       {/* <View style={styles.container}> #e8ecf4 */}
@@ -65,12 +70,7 @@ const Login = () => {
         </View>
 
         <View style={styles.formAction}>
-          <TouchableOpacity
-            onPress={() => {
-              //handle OnPress
-              Alert.alert("Sign in button click:");
-            }}
-          >
+          <TouchableOpacity onPress={handleSignIn}>
             <View style={styles.btn}>
               <Text style={styles.btnText}>Sign in</Text>
             </View>
