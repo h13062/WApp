@@ -13,10 +13,10 @@ const ThirdPage = ({ route, navigation }) => {
     useState(false);
 
   const options = [
-    { label: "I am Vegetarian", value: "vegetarian" },
-    { label: "I am Vegan", value: "vegan" },
-    { label: "I am on a Dairy-free", value: "dairyFree" },
-    { label: "I have no specific references", value: "noSpecificReference" },
+    { label: "Vegetarian", value: "vegetarian" },
+    { label: "Vegan", value: "vegan" },
+    { label: "Dairy Free", value: "dairyFree" },
+    { label: "I have no specific reference", value: "noSpecificReference" },
   ];
 
   const handleOptionSelect = (optionValue) => {
@@ -41,6 +41,12 @@ const ThirdPage = ({ route, navigation }) => {
         }
       }
     }
+  };
+
+  const handleSubmit = () => {
+    navigation.navigate("FourthPage", {
+      dietPreferences,
+    });
   };
 
   console.log("Selected Options:", dietPreferences);
@@ -82,7 +88,7 @@ const ThirdPage = ({ route, navigation }) => {
         >
           <Text style={styles.buttonText}>Back</Text>
         </TouchableOpacity>
-        <View style={{ marginLeft: 20 }}>
+        <View style={styles.nextButton}>
           <TouchableOpacity
             style={[
               styles.button,
@@ -91,11 +97,7 @@ const ThirdPage = ({ route, navigation }) => {
                   dietPreferences[0] !== "noSpecificReference")) &&
                 styles.disabledButton,
             ]}
-            onPress={() => {
-              navigation.navigate("NextScreen", {
-                dietPreferences,
-              });
-            }}
+            onPress={handleSubmit}
             disabled={
               !dietPreferences.length ||
               (noSpecificReferenceSelected &&
@@ -140,8 +142,7 @@ const styles = StyleSheet.create({
   },
   optionText: {
     fontSize: 24, // Change the option text size here
-    marginBottom: 25,
-    marginLeft: 15,
+    marginBottom: 20,
   },
   selectedOption: {
     backgroundColor: "#007bff",
@@ -179,6 +180,9 @@ const styles = StyleSheet.create({
   },
   disabledButton: {
     backgroundColor: "#ccc",
+  },
+  nextButton: {
+    marginLeft: 20,
   },
 });
 

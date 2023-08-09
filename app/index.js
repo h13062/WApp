@@ -1,13 +1,14 @@
 import { View, Text } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import Login from "../components/loginPage/login";
+import Login from "../components/LoginPage/login";
 // import Landing from "../components/landingPage/landing";
 // import Form from "../components/formPage/form";
 // import Calculator from "../components/calculatorPage/calculator";
-import FirstPage from "../components/surveyPage/firstPage/first";
-import SecondPage from "../components/surveyPage/secondPage/second";
-import ThirdPage from "../components/surveyPage/thirdPage/third";
+import FirstPage from "../components/surveyPage/Question1Page/first";
+import SecondPage from "../components/surveyPage/Question2Page/second";
+import ThirdPage from "../components/surveyPage/Question3Page/third";
+import FourthPage from "../components/surveyPage/Question4Page/fourth";
 const Stack = createStackNavigator();
 const App = () => {
   return (
@@ -42,6 +43,11 @@ const App = () => {
         name="ThirdPage"
         component={ThirdPage}
         options={{ title: "ThirdPage", headerShown: false }}
+      />
+      <Stack.Screen
+        name="FourthPage"
+        component={FourthPage}
+        options={{ title: "FourthPage", headerShown: false }}
       />
 
       {/* <Stack.Screen name="Form" component={Form} options={{ title: "Form" }} /> */}
