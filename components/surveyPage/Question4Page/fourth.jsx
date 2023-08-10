@@ -110,9 +110,7 @@ const FourthPage = ({ navigation }) => {
         </TouchableOpacity>
         <TouchableOpacity
           style={[styles.button, styles.activeButton]}
-          onPress={() => {
-            handleSubmit;
-          }}
+          onPress={handleSubmit}
         >
           <Text style={styles.buttonText}>Next</Text>
         </TouchableOpacity>

@@ -1,7 +1,7 @@
 import { View, Text } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import Login from "../components/LoginPage/login";
+import Login from "../components/loginPage/login";
 // import Landing from "../components/landingPage/landing";
 // import Form from "../components/formPage/form";
 // import Calculator from "../components/calculatorPage/calculator";
@@ -9,6 +9,8 @@ import FirstPage from "../components/surveyPage/Question1Page/first";
 import SecondPage from "../components/surveyPage/Question2Page/second";
 import ThirdPage from "../components/surveyPage/Question3Page/third";
 import FourthPage from "../components/surveyPage/Question4Page/fourth";
+import FifthPage from "../components/surveyPage/Question5Page/fifth";
+import SixthPage from "../components/surveyPage/Question6Page/sixth";
 const Stack = createStackNavigator();
 const App = () => {
   return (
@@ -49,7 +51,16 @@ const App = () => {
         component={FourthPage}
         options={{ title: "FourthPage", headerShown: false }}
       />
-
+      <Stack.Screen
+        name="FifthPage"
+        component={FifthPage}
+        options={{ title: "FifthPage", headerShown: false }}
+      />
+      <Stack.Screen
+        name="SixthPage"
+        component={SixthPage}
+        options={{ title: "SixthPage", headerShown: false }}
+      />
       {/* <Stack.Screen name="Form" component={Form} options={{ title: "Form" }} /> */}
       {/* <Stack.Screen
         name="Calculator"
