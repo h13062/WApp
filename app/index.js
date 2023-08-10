@@ -11,6 +11,7 @@ import ThirdPage from "../components/surveyPage/Question3Page/third";
 import FourthPage from "../components/surveyPage/Question4Page/fourth";
 import FifthPage from "../components/surveyPage/Question5Page/fifth";
 import SixthPage from "../components/surveyPage/Question6Page/sixth";
+import SeventhPage from "../components/surveyPage/Question7Page/seventh";
 const Stack = createStackNavigator();
 const App = () => {
   return (
@@ -60,6 +61,11 @@ const App = () => {
         name="SixthPage"
         component={SixthPage}
         options={{ title: "SixthPage", headerShown: false }}
+      />
+      <Stack.Screen
+        name="SeventhPage"
+        component={SeventhPage}
+        options={{ title: "SeventhPage", headerShown: false }}
       />
       {/* <Stack.Screen name="Form" component={Form} options={{ title: "Form" }} /> */}
       {/* <Stack.Screen
