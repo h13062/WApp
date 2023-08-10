@@ -9,13 +9,13 @@ const BodyIndex = ({ route, navigation }) => {
     // Perform any other actions you need here
 
     // Navigate to the next page if needed
-    // navigation.navigate("NinthPage");
+    navigation.navigate("NinthPage");
   };
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Collected Information</Text>
-      {/* Display collected information */}
+      {/* Display collected information
       <Text style={styles.infoText}>Age: {userInfo.age}</Text>
       <Text style={styles.infoText}>Name: {userInfo.name}</Text>
       <Text style={styles.infoText}>Gender: {userInfo.gender}</Text>
@@ -25,7 +25,7 @@ const BodyIndex = ({ route, navigation }) => {
       <Text style={styles.infoText}>
         Vitamin/Mineral Deficiencies:{" "}
         {userInfo.vitaminMineralDeficiencies.join(", ")}
-      </Text>
+      </Text> */}
       <Text style={styles.infoText}>
         Health Conditions: {userInfo.healthConditions.join(", ")}
       </Text>

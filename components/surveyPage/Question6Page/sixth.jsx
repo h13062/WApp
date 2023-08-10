@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 
-const SixthPage = ({ navigation }) => {
+const SixthPage = ({ route, navigation }) => {
   const [selectedOption, setSelectedOption] = useState(null);
   const [openConditions, setOpenConditions] = useState(false);
   const options = [

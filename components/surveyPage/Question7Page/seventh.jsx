@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 
-const SeventhPage = ({ navigation }) => {
+const SeventhPage = ({ route, navigation }) => {
   const [sleepHours, setSleepHours] = useState("");
   const [exerciseFactor, setExerciseFactor] = useState(null);
   const [openConditions, setOpenConditions] = useState(false);

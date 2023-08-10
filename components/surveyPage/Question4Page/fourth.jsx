@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 
-const FourthPage = ({ navigation }) => {
+const FourthPage = ({ route, navigation }) => {
   const [selectedVitamins, setSelectedVitamins] = useState([]);
   const [selectedMinerals, setSelectedMinerals] = useState([]);
   const [openVitamins, setOpenVitamins] = useState(false); // State for vitamins dropdown
