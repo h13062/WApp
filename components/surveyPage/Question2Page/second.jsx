@@ -29,6 +29,7 @@ const SecondPage = ({ route, navigation }) => {
   const handleSubmit = () => {
     if (heightValid && weightValid) {
       navigation.navigate("ThirdPage", {
+        ...route.params,
         username,
         measurementUnit,
         heightMeter,

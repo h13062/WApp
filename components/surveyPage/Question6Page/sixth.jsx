@@ -16,7 +16,7 @@ const SixthPage = ({ navigation }) => {
 
   const handleSubmit = () => {
     // Perform any necessary actions before navigating
-    navigation.navigate("SeventhPage");
+    navigation.navigate("SeventhPage", { ...route.params, selectedOption });
   };
 
   return (

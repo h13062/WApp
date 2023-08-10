@@ -45,6 +45,7 @@ const ThirdPage = ({ route, navigation }) => {
 
   const handleSubmit = () => {
     navigation.navigate("FourthPage", {
+      ...route.params,
       dietPreferences,
     });
   };

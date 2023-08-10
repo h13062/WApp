@@ -25,7 +25,12 @@ const FirstPage = ({ navigation }) => {
     console.log("Gender:", gender);
     console.log("Age:", age, ageOption);
 
-    navigation.navigate("SecondPage", { username: name });
+    navigation.navigate("SecondPage", {
+      username: name,
+      gender: gender,
+      age: age,
+      ageOption: ageOption,
+    });
   };
 
   return (

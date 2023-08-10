@@ -21,7 +21,11 @@ const SeventhPage = ({ navigation }) => {
 
   const handleSubmit = () => {
     // Perform any necessary actions before navigating
-    navigation.navigate("EighthPage");
+    navigation.navigate("BodyIndex", {
+      ...route.params,
+      sleepHours,
+      exerciseFactor,
+    });
   };
 
   return (

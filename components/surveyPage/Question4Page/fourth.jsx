@@ -54,7 +54,11 @@ const FourthPage = ({ navigation }) => {
 
   const handleSubmit = () => {
     // Perform any necessary actions before navigating
-    navigation.navigate("FifthPage");
+    navigation.navigate("FifthPage", {
+      ...route.params,
+      selectedVitamins,
+      selectedMinerals,
+    });
   };
 
   const mineralsDropdownMarginTop = openVitamins ? 170 : 10;
