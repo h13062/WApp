@@ -110,7 +110,7 @@ const BodyIndex = ({ route, navigation }) => {
 
     if (gender === "male") {
       bmr = 66.5 + 13.75 * weight + 5.003 * combinedHeight - 6.775 * age;
-    } else {
+    } else if (gender === "female") {
       bmr = 655.1 + 9.563 * weight + 1.85 * combinedHeight - 4.676 * age;
     }
     console.log("combinedHeight --->", combinedHeight);
@@ -141,7 +141,12 @@ const BodyIndex = ({ route, navigation }) => {
       <Text style={styles.title}>Collected Information</Text>
       <Text style={styles.infoText}>BMI: {bmi}</Text>
       <Text style={styles.infoText}>Calories: {calories}</Text>
-
+      <Text style={styles.infoText}>
+        Calories to lose weight: {calories - 500}
+      </Text>
+      <Text style={styles.infoText}>
+        Calories to gain weight: {calories + 500}
+      </Text>
       {age && ageOption && (
         <Text style={styles.infoText}>
           Recommended Daily Water Intake:{" "}
