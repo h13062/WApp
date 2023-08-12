@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -16,7 +16,7 @@ const FourthPage = ({ route, navigation }) => {
   const [openMinerals, setOpenMinerals] = useState(false); // State for minerals dropdown
 
   const vitaminOptions = [
-    //{ label: "No Vitamin Deficiencies", value: "No Vitamin Deficiencies" },
+    { label: 'No Vitamin Deficiencies', value: 'No Vitamin Deficiencies' },
     { label: 'Vitamin A', value: 'Vitamin A' },
     { label: 'Vitamin C', value: 'Vitamin C' },
     { label: 'Vitamin D', value: 'Vitamin D' },
@@ -35,7 +35,7 @@ const FourthPage = ({ route, navigation }) => {
   //   console.log("Selected Vitamins:", selectedVitamins);
   //   console.log("Selected Minerals:", selectedMinerals);
   const mineralOptions = [
-    //{ label: "No Mineral Deficiencies", value: "No Minerals Deficiencies" },
+    { label: 'No Mineral Deficiencies', value: 'No Minerals Deficiencies' },
     { label: 'Calcium', value: 'Calcium' },
     { label: 'Chromium', value: 'Chromium' },
     { label: 'Copper', value: 'Copper' },
@@ -52,6 +52,28 @@ const FourthPage = ({ route, navigation }) => {
     { label: 'Sodium', value: 'Sodium' },
     { label: 'Chloride', value: 'Chloride' },
   ];
+
+  useEffect(() => {
+    // console.log(selectedVitamins);
+    setSelectedVitamins(
+      selectedVitamins.includes('No Vitamin Deficiencies')
+        ? []
+        : selectedVitamins
+    );
+  }, [selectedVitamins]);
+
+  useEffect(() => {
+    // console.log(selectedMinerals);
+    setSelectedMinerals(
+      selectedMinerals.includes('No Minerals Deficiencies')
+        ? []
+        : selectedMinerals
+    );
+  }, [selectedMinerals]);
+
+  // const onVitaminClick = (value) => {
+  //   setSelectedVitamins(value.includes('No Vitamin Deficiencies') ? [] : value);
+  // };
 
   const handleSubmit = () => {
     // Perform any necessary actions before navigating
@@ -76,7 +98,7 @@ const FourthPage = ({ route, navigation }) => {
             value={selectedVitamins}
             setValue={setSelectedVitamins}
             maxHeight={150}
-            placeholder="Select Vitamins..."
+            // placeholder={openVitamins[0]}
             containerStyle={styles.dropdownContainer}
             showTickIcon={true}
             dropDownDirection="BOTTOM"
