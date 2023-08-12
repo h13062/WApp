@@ -1,5 +1,11 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  SafeAreaView,
+} from 'react-native';
 
 const BodyIndex = ({ route, navigation }) => {
   const {
@@ -137,42 +143,48 @@ const BodyIndex = ({ route, navigation }) => {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Collected Information</Text>
-      <View style={styles.whiteBox}>
-        <Text style={styles.infoText}>BMI: {bmi}</Text>
-        <Text style={styles.infoText}>Calories: {calories}</Text>
-        <Text style={styles.infoText}>
-          Calories to lose weight: {calories - 500}
-        </Text>
-        <Text style={styles.infoText}>
-          Calories to gain weight: {calories + 500}
-        </Text>
-        {age && ageOption && (
+    <SafeAreaView style={styles.safeArea}>
+      <View style={styles.container}>
+        <Text style={styles.title}>Collected Information</Text>
+        <View style={styles.whiteBox}>
+          <Text style={styles.infoText}>BMI: {bmi}</Text>
+          <Text style={styles.infoText}>Calories: {calories}</Text>
           <Text style={styles.infoText}>
-            Recommended Daily Water Intake:{' '}
-            {getWaterIntakeSuggestion(age, ageOption, gender)} L
+            Calories to lose weight: {calories - 500}
           </Text>
-        )}
+          <Text style={styles.infoText}>
+            Calories to gain weight: {calories + 500}
+          </Text>
+          {age && ageOption && (
+            <Text style={styles.infoText}>
+              Recommended Daily Water Intake:{' '}
+              {getWaterIntakeSuggestion(age, ageOption, gender)} L
+            </Text>
+          )}
+        </View>
+
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => {
+            navigation.goBack();
+          }}
+        >
+          <Text style={styles.buttonText}>Back</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
+          <Text style={styles.buttonText}>Submit</Text>
+        </TouchableOpacity>
       </View>
-
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => {
-          navigation.goBack();
-        }}
-      >
-        <Text style={styles.buttonText}>Back</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
-        <Text style={styles.buttonText}>Submit</Text>
-      </TouchableOpacity>
-    </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1, // Ensure the SafeAreaView takes up the entire screen
+    backgroundColor: '#fff', // Set your desired background color
+  },
   container: {
     flex: 1,
     justifyContent: 'center',

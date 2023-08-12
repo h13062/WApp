@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  SafeAreaView,
+} from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 
 const SixthPage = ({ route, navigation }) => {
@@ -20,46 +26,52 @@ const SixthPage = ({ route, navigation }) => {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Pregnancy and Lactating</Text>
-      <View>
-        <DropDownPicker
-          items={options.map((option) => ({ label: option, value: option }))}
-          open={openConditions}
-          setOpen={setOpenConditions}
-          value={selectedOption}
-          setValue={setSelectedOption}
-          maxHeight={300}
-          placeholder="Select an option ..."
-          containerStyle={styles.dropdownContainer}
-          showTickIcon={true}
-          dropDownDirection="BOTTOM"
-          textStyle={styles.menuTitle}
-          labelStyle={{ fontSize: 24 }}
-        />
-      </View>
+    <SafeAreaView style={styles.safeArea}>
+      <View style={styles.container}>
+        <Text style={styles.title}>Pregnancy and Lactating</Text>
+        <View>
+          <DropDownPicker
+            items={options.map((option) => ({ label: option, value: option }))}
+            open={openConditions}
+            setOpen={setOpenConditions}
+            value={selectedOption}
+            setValue={setSelectedOption}
+            maxHeight={300}
+            placeholder="Select an option ..."
+            containerStyle={styles.dropdownContainer}
+            showTickIcon={true}
+            dropDownDirection="BOTTOM"
+            textStyle={styles.menuTitle}
+            labelStyle={{ fontSize: 24 }}
+          />
+        </View>
 
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => {
-            navigation.goBack();
-          }}
-        >
-          <Text style={styles.buttonText}>Back</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.button, styles.activeButton]}
-          onPress={handleSubmit}
-        >
-          <Text style={styles.buttonText}>Next</Text>
-        </TouchableOpacity>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => {
+              navigation.goBack();
+            }}
+          >
+            <Text style={styles.buttonText}>Back</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.button, styles.activeButton]}
+            onPress={handleSubmit}
+          >
+            <Text style={styles.buttonText}>Next</Text>
+          </TouchableOpacity>
+        </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1, // Ensure the SafeAreaView takes up the entire screen
+    backgroundColor: '#fff', // Set your desired background color
+  },
   container: {
     flex: 1,
     justifyContent: 'center',

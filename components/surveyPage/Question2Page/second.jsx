@@ -12,7 +12,7 @@ import {
   Keyboard,
 } from 'react-native';
 import { measure, set } from 'react-native-reanimated';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaView } from 'react-native';
 
 const SecondPage = ({ route, navigation }) => {
   const { username } = route.params;
@@ -142,165 +142,171 @@ const SecondPage = ({ route, navigation }) => {
   ]);
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <SafeAreaView
-        style={styles.container}
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      >
-        <KeyboardAvoidingView>
-          <ScrollView contentContainerStyle={styles.scrollContainer}>
-            <Text style={styles.title}>Hi {username}</Text>
-            <Text style={styles.subtitle}>
-              Can you tell us more about yourself?
-            </Text>
-            <View style={styles.whiteBox}>
-              <View style={styles.questionContainer}>
-                <Text style={styles.label}>Measurement Unit</Text>
-                <View style={styles.radioContainer}>
-                  <TouchableOpacity
-                    style={[
-                      styles.radioButton,
-                      measurementUnit === 'metric' &&
-                        styles.radioButtonSelected,
-                    ]}
-                    onPress={() => setMeasurementUnit('metric')}
-                  >
-                    <Text
+    <SafeAreaView style={styles.safeArea}>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <SafeAreaView
+          style={styles.container}
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        >
+          <KeyboardAvoidingView>
+            <ScrollView contentContainerStyle={styles.scrollContainer}>
+              <Text style={styles.title}>Hi {username}</Text>
+              <Text style={styles.subtitle}>
+                Can you tell us more about yourself?
+              </Text>
+              <View style={styles.whiteBox}>
+                <View style={styles.questionContainer}>
+                  <Text style={styles.label}>Measurement Unit</Text>
+                  <View style={styles.radioContainer}>
+                    <TouchableOpacity
                       style={[
-                        styles.radioLabel,
+                        styles.radioButton,
                         measurementUnit === 'metric' &&
-                          styles.radioLabelSelected,
+                          styles.radioButtonSelected,
                       ]}
-                      onPress={onMetricClick}
+                      onPress={() => setMeasurementUnit('metric')}
                     >
-                      Metric
-                    </Text>
-                  </TouchableOpacity>
+                      <Text
+                        style={[
+                          styles.radioLabel,
+                          measurementUnit === 'metric' &&
+                            styles.radioLabelSelected,
+                        ]}
+                        onPress={onMetricClick}
+                      >
+                        Metric
+                      </Text>
+                    </TouchableOpacity>
 
-                  <TouchableOpacity
-                    style={[
-                      styles.radioButton,
-                      measurementUnit === 'imperial' &&
-                        styles.radioButtonSelected,
-                    ]}
-                    onPress={onImperialClick}
-                  >
-                    <Text
+                    <TouchableOpacity
                       style={[
-                        styles.radioLabel,
+                        styles.radioButton,
                         measurementUnit === 'imperial' &&
-                          styles.radioLabelSelected,
+                          styles.radioButtonSelected,
                       ]}
+                      onPress={onImperialClick}
                     >
-                      Imperial
-                    </Text>
-                  </TouchableOpacity>
+                      <Text
+                        style={[
+                          styles.radioLabel,
+                          measurementUnit === 'imperial' &&
+                            styles.radioLabelSelected,
+                        ]}
+                      >
+                        Imperial
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
                 </View>
-              </View>
 
-              <View style={styles.questionContainer}>
-                <Text style={styles.label}>Height</Text>
-                <View style={styles.inputContainer}>
-                  {measurementUnit === 'metric' ? (
-                    <>
-                      <TextInput
-                        placeholder="Meters"
-                        value={heightMeter}
-                        onChangeText={(text) => setHeightMeter(text)}
-                        style={[styles.input, styles.smallInput]}
-                        keyboardType="numeric"
-                      />
-                      <Text style={styles.unitText}>m</Text>
-                      <TextInput
-                        placeholder="Centimeters"
-                        value={heightCentimeter}
-                        onChangeText={(text) => setHeightCentimeter(text)}
-                        style={[styles.input, styles.smallInput]}
-                        keyboardType="numeric"
-                      />
-                      <Text style={styles.unitText}>cm</Text>
-                    </>
-                  ) : (
-                    <>
-                      <TextInput
-                        placeholder="Feet"
-                        value={heightFeet}
-                        onChangeText={(text) => setHeightFeet(text)}
-                        style={[styles.input, styles.smallInput]}
-                        keyboardType="numeric"
-                      />
-                      <Text style={styles.unitText}>ft</Text>
-                      <TextInput
-                        placeholder="Inches"
-                        value={heightInches}
-                        onChangeText={(text) => setHeightInches(text)}
-                        style={[styles.input, styles.smallInput]}
-                        keyboardType="numeric"
-                      />
-                      <Text style={styles.unitText}>in</Text>
-                    </>
+                <View style={styles.questionContainer}>
+                  <Text style={styles.label}>Height</Text>
+                  <View style={styles.inputContainer}>
+                    {measurementUnit === 'metric' ? (
+                      <>
+                        <TextInput
+                          placeholder="Meters"
+                          value={heightMeter}
+                          onChangeText={(text) => setHeightMeter(text)}
+                          style={[styles.input, styles.smallInput]}
+                          keyboardType="numeric"
+                        />
+                        <Text style={styles.unitText}>m</Text>
+                        <TextInput
+                          placeholder="Centimeters"
+                          value={heightCentimeter}
+                          onChangeText={(text) => setHeightCentimeter(text)}
+                          style={[styles.input, styles.smallInput]}
+                          keyboardType="numeric"
+                        />
+                        <Text style={styles.unitText}>cm</Text>
+                      </>
+                    ) : (
+                      <>
+                        <TextInput
+                          placeholder="Feet"
+                          value={heightFeet}
+                          onChangeText={(text) => setHeightFeet(text)}
+                          style={[styles.input, styles.smallInput]}
+                          keyboardType="numeric"
+                        />
+                        <Text style={styles.unitText}>ft</Text>
+                        <TextInput
+                          placeholder="Inches"
+                          value={heightInches}
+                          onChangeText={(text) => setHeightInches(text)}
+                          style={[styles.input, styles.smallInput]}
+                          keyboardType="numeric"
+                        />
+                        <Text style={styles.unitText}>in</Text>
+                      </>
+                    )}
+                  </View>
+                  {!heightValid && (
+                    <Text style={styles.warningText}>
+                      {measurementUnit === 'metric'
+                        ? 'Please enter height in meters and cm.'
+                        : 'Please enter height in feet and inches.'}
+                    </Text>
                   )}
                 </View>
-                {!heightValid && (
-                  <Text style={styles.warningText}>
-                    {measurementUnit === 'metric'
-                      ? 'Please enter height in meters and cm.'
-                      : 'Please enter height in feet and inches.'}
-                  </Text>
-                )}
-              </View>
 
-              <View style={styles.questionContainer}>
-                <Text style={styles.label}>Weight</Text>
-                <View style={styles.inputContainer}>
-                  <TextInput
-                    placeholder={measurementUnit === 'metric' ? 'kg' : 'lbs'}
-                    value={weight}
-                    onChangeText={(text) => setWeight(text)}
-                    style={[styles.input, styles.smallInput]}
-                    keyboardType="numeric"
-                  />
-                  <Text style={styles.unitText}>
-                    {measurementUnit === 'metric' ? 'kg' : 'lbs'}
-                  </Text>
+                <View style={styles.questionContainer}>
+                  <Text style={styles.label}>Weight</Text>
+                  <View style={styles.inputContainer}>
+                    <TextInput
+                      placeholder={measurementUnit === 'metric' ? 'kg' : 'lbs'}
+                      value={weight}
+                      onChangeText={(text) => setWeight(text)}
+                      style={[styles.input, styles.smallInput]}
+                      keyboardType="numeric"
+                    />
+                    <Text style={styles.unitText}>
+                      {measurementUnit === 'metric' ? 'kg' : 'lbs'}
+                    </Text>
+                  </View>
+                  {!weightValid && (
+                    <Text style={styles.warningText}>
+                      Please enter weight in{' '}
+                      {measurementUnit === 'metric' ? 'kg' : 'lbs'}.
+                    </Text>
+                  )}
                 </View>
-                {!weightValid && (
-                  <Text style={styles.warningText}>
-                    Please enter weight in{' '}
-                    {measurementUnit === 'metric' ? 'kg' : 'lbs'}.
-                  </Text>
-                )}
               </View>
-            </View>
 
-            <View style={styles.buttonContainer}>
-              <TouchableOpacity
-                onPress={() => navigation.goBack()}
-                style={[styles.button, styles.buttonBoth]}
-              >
-                <Text style={styles.buttonText}>Back</Text>
-              </TouchableOpacity>
+              <View style={styles.buttonContainer}>
+                <TouchableOpacity
+                  onPress={() => navigation.goBack()}
+                  style={[styles.button, styles.buttonBoth]}
+                >
+                  <Text style={styles.buttonText}>Back</Text>
+                </TouchableOpacity>
 
-              <TouchableOpacity
-                onPress={handleSubmit}
-                style={[
-                  styles.button,
-                  styles.buttonBoth,
-                  (!heightValid || !weightValid) && styles.disabledButton,
-                ]}
-                disabled={!heightValid || !weightValid}
-              >
-                <Text style={styles.buttonText}>Next</Text>
-              </TouchableOpacity>
-            </View>
-          </ScrollView>
-        </KeyboardAvoidingView>
-      </SafeAreaView>
-    </TouchableWithoutFeedback>
+                <TouchableOpacity
+                  onPress={handleSubmit}
+                  style={[
+                    styles.button,
+                    styles.buttonBoth,
+                    (!heightValid || !weightValid) && styles.disabledButton,
+                  ]}
+                  disabled={!heightValid || !weightValid}
+                >
+                  <Text style={styles.buttonText}>Next</Text>
+                </TouchableOpacity>
+              </View>
+            </ScrollView>
+          </KeyboardAvoidingView>
+        </SafeAreaView>
+      </TouchableWithoutFeedback>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1, // Ensure the SafeAreaView takes up the entire screen
+    backgroundColor: '#fff', // Set your desired background color
+  },
   container: {
     flex: 1,
     justifyContent: 'center',

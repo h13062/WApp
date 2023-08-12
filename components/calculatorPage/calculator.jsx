@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import { View, Text, Button, StyleSheet } from "react-native";
+import React, { useState } from 'react';
+import { View, Text, Button, StyleSheet, SafeAreaView } from 'react-native';
 
 const Calculator = ({ route, navigation }) => {
   const { weight, height, age, sex, activityFactor, pregnancyStatus } =
     route.params;
   const [pregnantLactatingStatus, setPregnantLactatingStatus] = useState(
-    "NotPregnantLactating"
+    'NotPregnantLactating'
   );
 
   const calculateBMI = () => {
@@ -17,13 +17,13 @@ const Calculator = ({ route, navigation }) => {
   const calculateBMR = (weight, height, age, sex) => {
     let bmr = 0;
     if (age > 59) {
-      if (sex === "male") {
+      if (sex === 'male') {
         bmr = 66.5 + 13.75 * weight + 5.003 * height - 6.755 * age;
       } else {
         bmr = 655.1 + 9.563 * weight + 1.85 * height - 4.676 * age;
       }
     } else {
-      if (sex === "male") {
+      if (sex === 'male') {
         bmr = 10 * weight + 6.25 * height - 5 * age + 5;
       } else {
         bmr = 10 * weight + 6.25 * height - 5 * age - 161;
@@ -71,104 +71,104 @@ const Calculator = ({ route, navigation }) => {
 
   const getDRIKey = (age, pregnancyStatus) => {
     if (age >= 0 && age <= 6) {
-      return "infants";
+      return 'infants';
     } else if (age >= 7 && age <= 12) {
-      return "children1to3";
+      return 'children1to3';
     } else if (age >= 13 && age <= 18) {
       if (
         pregnancyStatus &&
-        (pregnancyStatus.includes("Pregnant - 1st Trimester") ||
+        (pregnancyStatus.includes('Pregnant - 1st Trimester') ||
           pregnancyStatus.includes(
-            "Pregnant - 2nd Trimester (less than 20 weeks)"
+            'Pregnant - 2nd Trimester (less than 20 weeks)'
           ) ||
           pregnancyStatus.includes(
-            "Pregnant - 2nd Trimester (more than 20 weeks)"
+            'Pregnant - 2nd Trimester (more than 20 weeks)'
           ) ||
-          pregnancyStatus.includes("Pregnant - 3rd Trimester"))
+          pregnancyStatus.includes('Pregnant - 3rd Trimester'))
       ) {
-        return "pregnant";
+        return 'pregnant';
       } else {
-        return "teens14to18";
+        return 'teens14to18';
       }
     } else if (age >= 19 && age <= 30) {
       if (
         pregnancyStatus &&
-        (pregnancyStatus.includes("Pregnant - 1st Trimester") ||
+        (pregnancyStatus.includes('Pregnant - 1st Trimester') ||
           pregnancyStatus.includes(
-            "Pregnant - 2nd Trimester (less than 20 weeks)"
+            'Pregnant - 2nd Trimester (less than 20 weeks)'
           ) ||
           pregnancyStatus.includes(
-            "Pregnant - 2nd Trimester (more than 20 weeks)"
+            'Pregnant - 2nd Trimester (more than 20 weeks)'
           ) ||
-          pregnancyStatus.includes("Pregnant - 3rd Trimester"))
+          pregnancyStatus.includes('Pregnant - 3rd Trimester'))
       ) {
-        return "pregnant";
+        return 'pregnant';
       } else if (
-        pregnancyStatus === "Lactating - 0-6 months" ||
-        pregnancyStatus === "Lactating - over 7 months"
+        pregnancyStatus === 'Lactating - 0-6 months' ||
+        pregnancyStatus === 'Lactating - over 7 months'
       ) {
-        return "lactating";
+        return 'lactating';
       } else {
-        return "adults19to30";
+        return 'adults19to30';
       }
     } else if (age >= 31 && age <= 50) {
       if (
         pregnancyStatus &&
-        (pregnancyStatus.includes("Pregnant - 1st Trimester") ||
+        (pregnancyStatus.includes('Pregnant - 1st Trimester') ||
           pregnancyStatus.includes(
-            "Pregnant - 2nd Trimester (less than 20 weeks)"
+            'Pregnant - 2nd Trimester (less than 20 weeks)'
           ) ||
           pregnancyStatus.includes(
-            "Pregnant - 2nd Trimester (more than 20 weeks)"
+            'Pregnant - 2nd Trimester (more than 20 weeks)'
           ) ||
-          pregnancyStatus.includes("Pregnant - 3rd Trimester") ||
-          pregnancyStatus === "Lactating - 0-6 months" ||
-          pregnancyStatus === "Lactating - over 7 months")
+          pregnancyStatus.includes('Pregnant - 3rd Trimester') ||
+          pregnancyStatus === 'Lactating - 0-6 months' ||
+          pregnancyStatus === 'Lactating - over 7 months')
       ) {
-        return "pregnant";
+        return 'pregnant';
       } else {
-        return "adults31to50";
+        return 'adults31to50';
       }
     } else if (age >= 51 && age <= 70) {
       if (
         pregnancyStatus &&
-        (pregnancyStatus.includes("Pregnant - 1st Trimester") ||
+        (pregnancyStatus.includes('Pregnant - 1st Trimester') ||
           pregnancyStatus.includes(
-            "Pregnant - 2nd Trimester (less than 20 weeks)"
+            'Pregnant - 2nd Trimester (less than 20 weeks)'
           ) ||
           pregnancyStatus.includes(
-            "Pregnant - 2nd Trimester (more than 20 weeks)"
+            'Pregnant - 2nd Trimester (more than 20 weeks)'
           ) ||
-          pregnancyStatus.includes("Pregnant - 3rd Trimester") ||
-          pregnancyStatus === "Lactating - 0-6 months" ||
-          pregnancyStatus === "Lactating - over 7 months")
+          pregnancyStatus.includes('Pregnant - 3rd Trimester') ||
+          pregnancyStatus === 'Lactating - 0-6 months' ||
+          pregnancyStatus === 'Lactating - over 7 months')
       ) {
-        return "pregnant";
+        return 'pregnant';
       } else {
-        return "adults51to70";
+        return 'adults51to70';
       }
     } else if (age > 70) {
       if (
         pregnancyStatus &&
-        (pregnancyStatus.includes("Pregnant - 1st Trimester") ||
+        (pregnancyStatus.includes('Pregnant - 1st Trimester') ||
           pregnancyStatus.includes(
-            "Pregnant - 2nd Trimester (less than 20 weeks)"
+            'Pregnant - 2nd Trimester (less than 20 weeks)'
           ) ||
           pregnancyStatus.includes(
-            "Pregnant - 2nd Trimester (more than 20 weeks)"
+            'Pregnant - 2nd Trimester (more than 20 weeks)'
           ) ||
-          pregnancyStatus.includes("Pregnant - 3rd Trimester") ||
-          pregnancyStatus === "Lactating - 0-6 months" ||
-          pregnancyStatus === "Lactating - over 7 months")
+          pregnancyStatus.includes('Pregnant - 3rd Trimester') ||
+          pregnancyStatus === 'Lactating - 0-6 months' ||
+          pregnancyStatus === 'Lactating - over 7 months')
       ) {
-        return "pregnant";
+        return 'pregnant';
       } else {
-        return "adultsOver70";
+        return 'adultsOver70';
       }
     }
 
     // Default to adults if age not in any specific range
-    return "adults";
+    return 'adults';
   };
 
   const bmi = calculateBMI();
@@ -180,20 +180,21 @@ const Calculator = ({ route, navigation }) => {
     pregnancyStatus
   );
 
-  const isBMIApplicable = age > 3 && pregnancyStatus !== "Pregnant";
+  const isBMIApplicable = age > 3 && pregnancyStatus !== 'Pregnant';
   const bmiResultText = isBMIApplicable
     ? `BMI Result: ${bmi}`
-    : "BMI does not apply.";
+    : 'BMI does not apply.';
 
   const handleBack = () => {
     navigation.goBack();
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.label}>BMI Result:</Text>
-      <Text style={styles.result}>{bmiResultText}</Text>
-      {/* {age > 59 ? (
+    <SafeAreaView style={styles.safeArea}>
+      <View style={styles.container}>
+        <Text style={styles.label}>BMI Result:</Text>
+        <Text style={styles.result}>{bmiResultText}</Text>
+        {/* {age > 59 ? (
         <>
           <Text style={styles.label}>BMR Harris Result:</Text>
           <Text style={styles.result}>{bmr}</Text>
@@ -204,30 +205,35 @@ const Calculator = ({ route, navigation }) => {
           <Text style={styles.result}>{bmr}</Text>
         </>
       )} */}
-      <Text style={styles.label}>Required Calories:</Text>
-      <Text style={styles.result}>{requiredCalories}</Text>
-      <Text style={styles.label}>
-        Vitamin A Requirement (Micrograms RAE2): {vitaminARequirement}
-      </Text>
-      <Button title="Back to Form" onPress={handleBack} />
-    </View>
+        <Text style={styles.label}>Required Calories:</Text>
+        <Text style={styles.result}>{requiredCalories}</Text>
+        <Text style={styles.label}>
+          Vitamin A Requirement (Micrograms RAE2): {vitaminARequirement}
+        </Text>
+        <Button title="Back to Form" onPress={handleBack} />
+      </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1, // Ensure the SafeAreaView takes up the entire screen
+    backgroundColor: '#fff', // Set your desired background color
+  },
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   label: {
     fontSize: 24,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     marginBottom: 16,
   },
   result: {
     fontSize: 32,
-    fontWeight: "bold",
+    fontWeight: 'bold',
   },
 });
 
