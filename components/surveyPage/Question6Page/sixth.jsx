@@ -1,22 +1,22 @@
-import React, { useState } from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
-import DropDownPicker from "react-native-dropdown-picker";
+import React, { useState } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import DropDownPicker from 'react-native-dropdown-picker';
 
 const SixthPage = ({ route, navigation }) => {
   const [selectedOption, setSelectedOption] = useState(null);
   const [openConditions, setOpenConditions] = useState(false);
   const options = [
-    "No Pregnant or Laciating",
-    "Pregnant - 1st Trimester",
-    "Pregnant - 2nd Trimester",
-    "Pregnant - 3rd Trimester",
-    "Lactating - 0-6 months",
-    "Lactating - over 7 months",
+    'No Pregnant or Laciating',
+    'Pregnant - 1st Trimester',
+    'Pregnant - 2nd Trimester',
+    'Pregnant - 3rd Trimester',
+    'Lactating - 0-6 months',
+    'Lactating - over 7 months',
   ];
 
   const handleSubmit = () => {
     // Perform any necessary actions before navigating
-    navigation.navigate("SeventhPage", { ...route.params, selectedOption });
+    navigation.navigate('SeventhPage', { ...route.params, selectedOption });
   };
 
   return (
@@ -35,6 +35,7 @@ const SixthPage = ({ route, navigation }) => {
           showTickIcon={true}
           dropDownDirection="BOTTOM"
           textStyle={styles.menuTitle}
+          labelStyle={{ fontSize: 24 }}
         />
       </View>
 
@@ -61,42 +62,42 @@ const SixthPage = ({ route, navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     padding: 20,
     backgroundColor:
-      "linear-gradient(0deg, rgba(0,32,76,1) 0%, rgba(163,224,247,1) 100%)",
+      'linear-gradient(0deg, rgba(0,32,76,1) 0%, rgba(163,224,247,1) 100%)',
   },
   title: {
     fontSize: 36,
-    fontWeight: "bold",
-    justifyContent: "center",
+    fontWeight: 'bold',
+    justifyContent: 'center',
     marginBottom: 45,
-    color: "#fff",
+    color: '#fff',
   },
   dropdownContainer: {
-    width: "100%",
+    width: '100%',
     marginTop: 20,
   },
   buttonContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     marginTop: 250,
   },
   button: {
-    backgroundColor: "#007bff",
+    backgroundColor: '#007bff',
     borderRadius: 36,
     paddingVertical: 12,
     paddingHorizontal: 40,
-    alignItems: "center",
+    alignItems: 'center',
   },
   buttonText: {
-    color: "white",
-    fontSize: 16,
-    fontWeight: "bold",
+    color: 'white',
+    fontSize: 20,
+    fontWeight: 'bold',
   },
   activeButton: {
-    backgroundColor: "#007bff",
+    backgroundColor: '#007bff',
     marginLeft: 20,
   },
   menuTitle: {
