@@ -1,5 +1,5 @@
-import React from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import React from 'react';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
 const BodyIndex = ({ route, navigation }) => {
   const {
@@ -46,52 +46,52 @@ const BodyIndex = ({ route, navigation }) => {
   const getWaterIntakeSuggestion = (age, ageOption, gender) => {
     const waterRecommendations = {
       years: {
-        "1–3 y": { male: 1.3, female: 1.3 },
-        "4–8 y": { male: 1.7, female: 1.7 },
-        "9–13 y": { male: 2.4, female: 2.1 },
-        "14–18 y": { male: 3.3, female: 2.3 },
-        "19–30 y": { male: 3.7, female: 2.7 },
-        "31–50 y": { male: 3.7, female: 2.7 },
-        "51–70 y": { male: 3.7, female: 2.7 },
-        "> 70 y": { male: 3.7, female: 2.7 },
+        '1–3 y': { male: 1.3, female: 1.3 },
+        '4–8 y': { male: 1.7, female: 1.7 },
+        '9–13 y': { male: 2.4, female: 2.1 },
+        '14–18 y': { male: 3.3, female: 2.3 },
+        '19–30 y': { male: 3.7, female: 2.7 },
+        '31–50 y': { male: 3.7, female: 2.7 },
+        '51–70 y': { male: 3.7, female: 2.7 },
+        '> 70 y': { male: 3.7, female: 2.7 },
       },
       months: {
-        "0–6 mo": { male: 0.7, female: 0.7 },
-        "6–12 mo": { male: 0.8, female: 0.8 },
+        '0–6 mo': { male: 0.7, female: 0.7 },
+        '6–12 mo': { male: 0.8, female: 0.8 },
       },
     };
 
-    let selectedAgeRange = "";
-    if (ageOption === "years") {
+    let selectedAgeRange = '';
+    if (ageOption === 'years') {
       if (age >= 1 && age <= 3) {
-        selectedAgeRange = "1–3 y";
+        selectedAgeRange = '1–3 y';
       } else if (age >= 4 && age <= 8) {
-        selectedAgeRange = "4–8 y";
+        selectedAgeRange = '4–8 y';
       } else if (age >= 9 && age <= 13) {
-        selectedAgeRange = "9–13 y";
+        selectedAgeRange = '9–13 y';
       } else if (age >= 14 && age <= 18) {
-        selectedAgeRange = "14–18 y";
+        selectedAgeRange = '14–18 y';
       } else if (age >= 19 && age <= 30) {
-        selectedAgeRange = "19–30 y";
+        selectedAgeRange = '19–30 y';
       } else if (age >= 31 && age <= 50) {
-        selectedAgeRange = "31–50 y";
+        selectedAgeRange = '31–50 y';
       } else if (age >= 51 && age <= 70) {
-        selectedAgeRange = "51–70 y";
+        selectedAgeRange = '51–70 y';
       } else if (age >= 71) {
-        selectedAgeRange = "> 70 y";
+        selectedAgeRange = '> 70 y';
       }
     } else {
       if (age >= 0 && age < 6) {
-        selectedAgeRange = "0–6 mo";
+        selectedAgeRange = '0–6 mo';
       } else {
-        selectedAgeRange = "6–12 mo";
+        selectedAgeRange = '6–12 mo';
       }
     }
 
     const recommendation =
       waterRecommendations[ageOption][selectedAgeRange]?.[gender.toLowerCase()];
 
-    return recommendation ? recommendation.toFixed(1) : "N/A";
+    return recommendation ? recommendation.toFixed(1) : 'N/A';
   };
 
   const calculateBMI = (weight, heightMeter, heightCentimeter) => {
@@ -108,15 +108,15 @@ const BodyIndex = ({ route, navigation }) => {
     );
     let bmr = 0;
 
-    if (gender === "male") {
+    if (gender === 'male') {
       bmr = 66.5 + 13.75 * weight + 5.003 * combinedHeight - 6.775 * age;
-    } else if (gender === "female") {
+    } else if (gender === 'female') {
       bmr = 655.1 + 9.563 * weight + 1.85 * combinedHeight - 4.676 * age;
     }
-    console.log("combinedHeight --->", combinedHeight);
-    console.log("Age: ", age);
-    console.log("BMR: ", bmr);
-    console.log("Height Meter: ", heightMeter);
+    console.log('combinedHeight --->', combinedHeight);
+    console.log('Age: ', age);
+    console.log('BMR: ', bmr);
+    console.log('Height Meter: ', heightMeter);
     return bmr.toFixed(2);
   };
 
@@ -129,7 +129,7 @@ const BodyIndex = ({ route, navigation }) => {
   const bmi = calculateBMI(weight, heightMeter, heightCentimeter);
   console.log(exerciseFactor);
   const handleSubmit = () => {
-    console.log("Collected Information:", collectedInformation);
+    console.log('Collected Information:', collectedInformation);
     // Perform any other actions you need here
 
     // Navigate to the next page if needed
@@ -139,20 +139,22 @@ const BodyIndex = ({ route, navigation }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Collected Information</Text>
-      <Text style={styles.infoText}>BMI: {bmi}</Text>
-      <Text style={styles.infoText}>Calories: {calories}</Text>
-      <Text style={styles.infoText}>
-        Calories to lose weight: {calories - 500}
-      </Text>
-      <Text style={styles.infoText}>
-        Calories to gain weight: {calories + 500}
-      </Text>
-      {age && ageOption && (
+      <View style={styles.whiteBox}>
+        <Text style={styles.infoText}>BMI: {bmi}</Text>
+        <Text style={styles.infoText}>Calories: {calories}</Text>
         <Text style={styles.infoText}>
-          Recommended Daily Water Intake:{" "}
-          {getWaterIntakeSuggestion(age, ageOption, gender)} L
+          Calories to lose weight: {calories - 500}
         </Text>
-      )}
+        <Text style={styles.infoText}>
+          Calories to gain weight: {calories + 500}
+        </Text>
+        {age && ageOption && (
+          <Text style={styles.infoText}>
+            Recommended Daily Water Intake:{' '}
+            {getWaterIntakeSuggestion(age, ageOption, gender)} L
+          </Text>
+        )}
+      </View>
 
       <TouchableOpacity
         style={styles.button}
@@ -173,41 +175,52 @@ const BodyIndex = ({ route, navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     padding: 20,
     backgroundColor:
-      "linear-gradient(0deg, rgba(0,32,76,1) 0%, rgba(163,224,247,1) 100%)",
+      'linear-gradient(0deg, rgba(0,32,76,1) 0%, rgba(163,224,247,1) 100%)',
   },
   title: {
     fontSize: 36,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     marginBottom: 45,
-    color: "#fff",
+    color: '#fff',
+    textAlign: 'center',
   },
   infoText: {
-    fontSize: 18,
-    color: "#fff",
+    fontSize: 24,
+    // color: '#fff',
     marginBottom: 10,
+    textAlign: 'left',
+    width: '100%',
   },
   submitButton: {
-    backgroundColor: "#007bff",
+    backgroundColor: '#007bff',
     borderRadius: 36,
     paddingVertical: 12,
     paddingHorizontal: 40,
     marginTop: 20,
   },
   button: {
-    backgroundColor: "#007bff",
+    backgroundColor: '#007bff',
     borderRadius: 36,
     paddingVertical: 12,
     paddingHorizontal: 40,
-    alignItems: "center",
+    alignItems: 'center',
   },
   buttonText: {
-    color: "white",
+    color: 'white',
     fontSize: 16,
-    fontWeight: "bold",
+    fontWeight: 'bold',
+  },
+  whiteBox: {
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    padding: 20,
+    width: '100%',
+    alignItems: 'center',
+    marginBottom: 40, // Increase the marginBottom to make the white box longer
   },
 });
 

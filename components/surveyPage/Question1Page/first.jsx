@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -10,22 +10,22 @@ import {
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
   Keyboard,
-} from "react-native";
-import { Picker } from "@react-native-picker/picker";
-import { useNavigation } from "@react-navigation/native";
+} from 'react-native';
+import { Picker } from '@react-native-picker/picker';
+import { useNavigation } from '@react-navigation/native';
 
 const FirstPage = ({ navigation }) => {
-  const [name, setName] = useState("");
-  const [gender, setGender] = useState("male");
-  const [age, setAge] = useState("");
-  const [ageOption, setAgeOption] = useState("years");
+  const [name, setName] = useState('');
+  const [gender, setGender] = useState('male');
+  const [age, setAge] = useState('');
+  const [ageOption, setAgeOption] = useState('years');
 
   const handleSubmit = () => {
-    console.log("Name:", name);
-    console.log("Gender:", gender);
-    console.log("Age:", age, ageOption);
+    console.log('Name:', name);
+    console.log('Gender:', gender);
+    console.log('Age:', age, ageOption);
 
-    navigation.navigate("SecondPage", {
+    navigation.navigate('SecondPage', {
       username: name,
       gender: gender,
       age: age,
@@ -37,7 +37,7 @@ const FirstPage = ({ navigation }) => {
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <KeyboardAvoidingView
         style={styles.container}
-        behavior={Platform.OS === "ios" ? "padding" : null}
+        behavior={Platform.OS === 'ios' ? 'padding' : null}
       >
         <Text style={styles.title}>Let us know about each other</Text>
         <View style={styles.whiteBox}>
@@ -57,14 +57,14 @@ const FirstPage = ({ navigation }) => {
               <TouchableOpacity
                 style={[
                   styles.radioButton,
-                  gender === "male" && styles.radioButtonSelected,
+                  gender === 'male' && styles.radioButtonSelected,
                 ]}
-                onPress={() => setGender("male")}
+                onPress={() => setGender('male')}
               >
                 <Text
                   style={[
                     styles.radioLabel,
-                    gender === "male" && styles.radioLabelSelected,
+                    gender === 'male' && styles.radioLabelSelected,
                   ]}
                 >
                   Male
@@ -74,14 +74,14 @@ const FirstPage = ({ navigation }) => {
               <TouchableOpacity
                 style={[
                   styles.radioButton,
-                  gender === "female" && styles.radioButtonSelected,
+                  gender === 'female' && styles.radioButtonSelected,
                 ]}
-                onPress={() => setGender("female")}
+                onPress={() => setGender('female')}
               >
                 <Text
                   style={[
                     styles.radioLabel,
-                    gender === "female" && styles.radioLabelSelected,
+                    gender === 'female' && styles.radioLabelSelected,
                   ]}
                 >
                   Female
@@ -96,14 +96,14 @@ const FirstPage = ({ navigation }) => {
               <TouchableOpacity
                 style={[
                   styles.radioButton,
-                  ageOption === "years" && styles.radioButtonSelected,
+                  ageOption === 'years' && styles.radioButtonSelected,
                 ]}
-                onPress={() => setAgeOption("years")}
+                onPress={() => setAgeOption('years')}
               >
                 <Text
                   style={[
                     styles.radioLabel,
-                    ageOption === "years" && styles.radioLabelSelected,
+                    ageOption === 'years' && styles.radioLabelSelected,
                   ]}
                 >
                   Years
@@ -113,14 +113,14 @@ const FirstPage = ({ navigation }) => {
               <TouchableOpacity
                 style={[
                   styles.radioButton,
-                  ageOption === "months" && styles.radioButtonSelected,
+                  ageOption === 'months' && styles.radioButtonSelected,
                 ]}
-                onPress={() => setAgeOption("months")}
+                onPress={() => setAgeOption('months')}
               >
                 <Text
                   style={[
                     styles.radioLabel,
-                    ageOption === "months" && styles.radioLabelSelected,
+                    ageOption === 'months' && styles.radioLabelSelected,
                   ]}
                 >
                   Months
@@ -131,7 +131,7 @@ const FirstPage = ({ navigation }) => {
               placeholder={`Enter your age in ${ageOption}`}
               value={age}
               onChangeText={(text) => {
-                if (ageOption === "months") {
+                if (ageOption === 'months') {
                   const value = parseInt(text);
                   if (!isNaN(value) && value <= 12) {
                     setAge(text);
@@ -146,7 +146,7 @@ const FirstPage = ({ navigation }) => {
               keyboardType="numeric"
             />
 
-            {ageOption === "months" && parseInt(age) > 12 && (
+            {ageOption === 'months' && parseInt(age) > 12 && (
               <Text style={styles.warningText}>
                 Please enter a value less than or equal to 12 for months.
               </Text>
@@ -166,15 +166,15 @@ const FirstPage = ({ navigation }) => {
             onPress={handleSubmit}
             style={[
               styles.button,
-              ageOption === "months" &&
+              ageOption === 'months' &&
                 (parseInt(age) > 12 || parseInt(age) <= 0) &&
                 styles.disabledButton,
-              ageOption === "months" &&
+              ageOption === 'months' &&
                 parseInt(age) > 12 &&
                 styles.errorButton,
             ]}
             disabled={
-              ageOption === "months" &&
+              ageOption === 'months' &&
               (parseInt(age) > 12 || parseInt(age) <= 0)
             }
           >
@@ -189,98 +189,102 @@ const FirstPage = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     padding: 20,
     backgroundColor:
-      "linear-gradient(0deg, rgba(0,32,76,1) 0%, rgba(163,224,247,1) 100%)",
+      'linear-gradient(0deg, rgba(0,32,76,1) 0%, rgba(163,224,247,1) 100%)',
   },
   title: {
     fontSize: 36,
-    fontWeight: "bold",
-    textAlign: "center",
+    fontWeight: 'bold',
+    textAlign: 'center',
     marginBottom: 45,
-    color: "#fff", // Add this line to set the text color to white
+    color: '#fff', // Add this line to set the text color to white
   },
   whiteBox: {
-    backgroundColor: "white",
+    backgroundColor: 'white',
     padding: 20,
     borderRadius: 45,
-    width: "100%",
+    width: '100%',
     marginBottom: 20,
   },
   questionContainer: {
     marginBottom: 15,
-    alignItems: "flex-start",
+    alignItems: 'flex-start',
   },
   label: {
     fontSize: 24,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     marginBottom: 8,
-    textAlign: "left",
+    textAlign: 'left',
   },
   input: {
     marginBottom: 16,
     borderWidth: 1,
-    borderColor: "#ccc",
+    borderColor: '#ccc',
     borderRadius: 4,
     padding: 8,
-    width: "100%",
+    width: '100%',
     fontSize: 24,
   },
   radioContainer: {
-    flexDirection: "row",
-    justifyContent: "flex-start",
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
     marginBottom: 16,
   },
   radioButton: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
     marginRight: 20,
     borderWidth: 1,
-    borderColor: "#007bff",
+    borderColor: '#007bff',
     borderRadius: 36,
     paddingVertical: 10,
     paddingHorizontal: 16,
   },
   radioButtonSelected: {
-    backgroundColor: "#007bff",
+    backgroundColor: '#007bff',
   },
   radioLabel: {
     fontSize: 24,
     marginLeft: 8,
     marginRight: 8,
-    color: "#007bff",
+    color: '#007bff',
   },
   radioLabelSelected: {
-    color: "white",
+    color: 'white',
   },
   buttonContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginTop: 40,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: 20,
+    marginBottom: 20,
   },
   button: {
     flex: 1,
-    backgroundColor: "#007bff",
+    backgroundColor: '#007bff',
     borderRadius: 36,
     paddingVertical: 12,
-    alignItems: "center",
+    alignItems: 'center',
+    marginLeft: 10,
+    marginRight: 10,
   },
   buttonText: {
-    color: "white",
-    fontSize: 16,
-    fontWeight: "bold",
+    color: 'white',
+    fontSize: 20,
+    fontWeight: 'bold',
   },
   disabledButton: {
-    backgroundColor: "#ccc",
+    backgroundColor: '#ccc',
   },
   errorButton: {
-    backgroundColor: "#ccc",
+    backgroundColor: '#ccc',
   },
   previousButton: {
-    backgroundColor: "#007bff",
+    backgroundColor: '#007bff',
     marginLeft: 12,
     marginRight: 16,
   },

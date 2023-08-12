@@ -1,22 +1,22 @@
-import React, { useState } from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
-import DropDownPicker from "react-native-dropdown-picker";
+import React, { useState } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import DropDownPicker from 'react-native-dropdown-picker';
 
 const FifthPage = ({ route, navigation }) => {
   const [selectedConditions, setSelectedConditions] = useState([]);
   const [openConditions, setOpenConditions] = useState(false);
 
   const conditionOptions = [
-    "High blood pressure",
-    "Cancer",
-    "Heart Related Conditions",
-    "Diabetes",
-    "Back Pain",
-    "Hair Loss",
+    'High blood pressure',
+    'Cancer',
+    'Heart Related Conditions',
+    'Diabetes',
+    'Back Pain',
+    'Hair Loss',
   ];
 
   const handleSubmit = () => {
-    navigation.navigate("SixthPage", {
+    navigation.navigate('SixthPage', {
       ...route.params,
       selectedConditions,
     });
@@ -45,6 +45,7 @@ const FifthPage = ({ route, navigation }) => {
           multiple={true}
           mode="BADGE"
           textStyle={styles.menuTitle}
+          labelStyle={{ fontSize: 24 }}
         />
       </View>
 
@@ -71,42 +72,42 @@ const FifthPage = ({ route, navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     padding: 20,
     backgroundColor:
-      "linear-gradient(0deg, rgba(0,32,76,1) 0%, rgba(163,224,247,1) 100%)",
+      'linear-gradient(0deg, rgba(0,32,76,1) 0%, rgba(163,224,247,1) 100%)',
   },
   title: {
     fontSize: 36,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     marginBottom: 45,
-    color: "#fff",
-    textAlign: "center",
+    color: '#fff',
+    textAlign: 'center',
   },
   dropdownContainer: {
-    width: "100%",
+    width: '100%',
     marginTop: 20,
   },
   buttonContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     marginTop: 250,
   },
   button: {
-    backgroundColor: "#007bff",
+    backgroundColor: '#007bff',
     borderRadius: 36,
     paddingVertical: 12,
     paddingHorizontal: 40,
-    alignItems: "center",
+    alignItems: 'center',
   },
   buttonText: {
-    color: "white",
-    fontSize: 16,
-    fontWeight: "bold",
+    color: 'white',
+    fontSize: 20,
+    fontWeight: 'bold',
   },
   activeButton: {
-    backgroundColor: "#007bff",
+    backgroundColor: '#007bff',
     marginLeft: 20,
   },
   menuTitle: {
