@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
   TouchableOpacity,
   ScrollView,
   StyleSheet,
+  SafeAreaView,
 } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 
@@ -15,7 +16,7 @@ const FourthPage = ({ route, navigation }) => {
   const [openMinerals, setOpenMinerals] = useState(false); // State for minerals dropdown
 
   const vitaminOptions = [
-    //{ label: "No Vitamin Deficiencies", value: "No Vitamin Deficiencies" },
+    { label: 'No Vitamin Deficiencies', value: 'No Vitamin Deficiencies' },
     { label: 'Vitamin A', value: 'Vitamin A' },
     { label: 'Vitamin C', value: 'Vitamin C' },
     { label: 'Vitamin D', value: 'Vitamin D' },
@@ -34,7 +35,7 @@ const FourthPage = ({ route, navigation }) => {
   //   console.log("Selected Vitamins:", selectedVitamins);
   //   console.log("Selected Minerals:", selectedMinerals);
   const mineralOptions = [
-    //{ label: "No Mineral Deficiencies", value: "No Minerals Deficiencies" },
+    { label: 'No Mineral Deficiencies', value: 'No Minerals Deficiencies' },
     { label: 'Calcium', value: 'Calcium' },
     { label: 'Chromium', value: 'Chromium' },
     { label: 'Copper', value: 'Copper' },
@@ -52,6 +53,28 @@ const FourthPage = ({ route, navigation }) => {
     { label: 'Chloride', value: 'Chloride' },
   ];
 
+  useEffect(() => {
+    // console.log(selectedVitamins);
+    setSelectedVitamins(
+      selectedVitamins.includes('No Vitamin Deficiencies')
+        ? []
+        : selectedVitamins
+    );
+  }, [selectedVitamins]);
+
+  useEffect(() => {
+    // console.log(selectedMinerals);
+    setSelectedMinerals(
+      selectedMinerals.includes('No Minerals Deficiencies')
+        ? []
+        : selectedMinerals
+    );
+  }, [selectedMinerals]);
+
+  // const onVitaminClick = (value) => {
+  //   setSelectedVitamins(value.includes('No Vitamin Deficiencies') ? [] : value);
+  // };
+
   const handleSubmit = () => {
     // Perform any necessary actions before navigating
     navigation.navigate('FifthPage', {
@@ -63,69 +86,75 @@ const FourthPage = ({ route, navigation }) => {
 
   const mineralsDropdownMarginTop = openVitamins ? 170 : 10;
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Vitamin and Minerals Deficiencies</Text>
-      <View>
-        <Text style={styles.subtitle}>Vitamins</Text>
-        <DropDownPicker
-          items={vitaminOptions}
-          open={openVitamins} // Set open state for vitamins dropdown
-          setOpen={setOpenVitamins}
-          value={selectedVitamins}
-          setValue={setSelectedVitamins}
-          maxHeight={150}
-          placeholder="Select Vitamins..."
-          containerStyle={styles.dropdownContainer}
-          showTickIcon={true}
-          dropDownDirection="BOTTOM"
-          multiple={true}
-          mode="BADGE"
-          textStyle={styles.menuTitle}
-          labelStyle={{ fontSize: 24 }}
-        />
-      </View>
+    <SafeAreaView style={styles.safeArea}>
+      <View style={styles.container}>
+        <Text style={styles.title}>Vitamin and Minerals Deficiencies</Text>
+        <View>
+          <Text style={styles.subtitle}>Vitamins</Text>
+          <DropDownPicker
+            items={vitaminOptions}
+            open={openVitamins} // Set open state for vitamins dropdown
+            setOpen={setOpenVitamins}
+            value={selectedVitamins}
+            setValue={setSelectedVitamins}
+            maxHeight={150}
+            // placeholder={openVitamins[0]}
+            containerStyle={styles.dropdownContainer}
+            showTickIcon={true}
+            dropDownDirection="BOTTOM"
+            multiple={true}
+            mode="BADGE"
+            textStyle={styles.menuTitle}
+            labelStyle={{ fontSize: 24 }}
+          />
+        </View>
 
-      <View style={{ marginTop: mineralsDropdownMarginTop }}>
-        <Text style={styles.subtitle}>Minerals</Text>
-        <DropDownPicker
-          items={mineralOptions}
-          open={openMinerals} // Set open state for minerals dropdown
-          setOpen={setOpenMinerals}
-          value={selectedMinerals}
-          setValue={setSelectedMinerals}
-          maxHeight={150}
-          placeholder="Select Minerals..."
-          containerStyle={[styles.dropdownContainer]}
-          showTickIcon={true}
-          dropDownDirection="BOTTOM"
-          multiple={true}
-          mode="BADGE"
-          textStyle={styles.menuTitle}
-          labelStyle={{ fontSize: 24 }}
-        />
-      </View>
+        <View style={{ marginTop: mineralsDropdownMarginTop }}>
+          <Text style={styles.subtitle}>Minerals</Text>
+          <DropDownPicker
+            items={mineralOptions}
+            open={openMinerals} // Set open state for minerals dropdown
+            setOpen={setOpenMinerals}
+            value={selectedMinerals}
+            setValue={setSelectedMinerals}
+            maxHeight={150}
+            placeholder="Select Minerals..."
+            containerStyle={[styles.dropdownContainer]}
+            showTickIcon={true}
+            dropDownDirection="BOTTOM"
+            multiple={true}
+            mode="BADGE"
+            textStyle={styles.menuTitle}
+            labelStyle={{ fontSize: 24 }}
+          />
+        </View>
 
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => {
-            navigation.goBack();
-          }}
-        >
-          <Text style={styles.buttonText}>Back</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.button, styles.activeButton]}
-          onPress={handleSubmit}
-        >
-          <Text style={styles.buttonText}>Next</Text>
-        </TouchableOpacity>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => {
+              navigation.goBack();
+            }}
+          >
+            <Text style={styles.buttonText}>Back</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.button, styles.activeButton]}
+            onPress={handleSubmit}
+          >
+            <Text style={styles.buttonText}>Next</Text>
+          </TouchableOpacity>
+        </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1, // Ensure the SafeAreaView takes up the entire screen
+    backgroundColor: '#fff', // Set your desired background color
+  },
   container: {
     flex: 1,
     justifyContent: 'center',

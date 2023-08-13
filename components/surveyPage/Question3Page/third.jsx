@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   ScrollView,
   StyleSheet,
+  SafeAreaView,
 } from 'react-native';
 
 const ThirdPage = ({ route, navigation }) => {
@@ -53,67 +54,73 @@ const ThirdPage = ({ route, navigation }) => {
   console.log('Selected Options:', dietPreferences);
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.title}>Are you following any diet?</Text>
-      <View style={styles.optionsContainer}>
-        {options.map((option) => (
-          <TouchableOpacity
-            key={option.value}
-            style={[
-              styles.option,
-              dietPreferences.includes(option.value) && styles.selectedOption,
-              noSpecificReferenceSelected &&
-                option.value !== 'noSpecificReference' &&
-                styles.disabledOption,
-            ]}
-            onPress={() => handleOptionSelect(option.value)}
-          >
-            <Text
+    <SafeAreaView style={styles.safeArea}>
+      <ScrollView contentContainerStyle={styles.container}>
+        <Text style={styles.title}>Are you following any diet?</Text>
+        <View style={styles.optionsContainer}>
+          {options.map((option) => (
+            <TouchableOpacity
+              key={option.value}
               style={[
-                styles.optionText,
-                dietPreferences.includes(option.value) &&
-                  styles.selectedOptionText,
+                styles.option,
+                dietPreferences.includes(option.value) && styles.selectedOption,
+                noSpecificReferenceSelected &&
+                  option.value !== 'noSpecificReference' &&
+                  styles.disabledOption,
               ]}
+              onPress={() => handleOptionSelect(option.value)}
             >
-              {option.label}
-            </Text>
-          </TouchableOpacity>
-        ))}
-      </View>
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          style={styles.backButton}
-          onPress={() => {
-            navigation.goBack();
-          }}
-        >
-          <Text style={styles.buttonText}>Back</Text>
-        </TouchableOpacity>
-        <View style={styles.nextButton}>
-          <TouchableOpacity
-            style={[
-              styles.button,
-              (!dietPreferences.length ||
-                (noSpecificReferenceSelected &&
-                  dietPreferences[0] !== 'noSpecificReference')) &&
-                styles.disabledButton,
-            ]}
-            onPress={handleSubmit}
-            disabled={
-              !dietPreferences.length ||
-              (noSpecificReferenceSelected &&
-                dietPreferences[0] !== 'noSpecificReference')
-            }
-          >
-            <Text style={styles.buttonText}>Next</Text>
-          </TouchableOpacity>
+              <Text
+                style={[
+                  styles.optionText,
+                  dietPreferences.includes(option.value) &&
+                    styles.selectedOptionText,
+                ]}
+              >
+                {option.label}
+              </Text>
+            </TouchableOpacity>
+          ))}
         </View>
-      </View>
-    </ScrollView>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            style={styles.backButton}
+            onPress={() => {
+              navigation.goBack();
+            }}
+          >
+            <Text style={styles.buttonText}>Back</Text>
+          </TouchableOpacity>
+          <View style={styles.nextButton}>
+            <TouchableOpacity
+              style={[
+                styles.button,
+                (!dietPreferences.length ||
+                  (noSpecificReferenceSelected &&
+                    dietPreferences[0] !== 'noSpecificReference')) &&
+                  styles.disabledButton,
+              ]}
+              onPress={handleSubmit}
+              disabled={
+                !dietPreferences.length ||
+                (noSpecificReferenceSelected &&
+                  dietPreferences[0] !== 'noSpecificReference')
+              }
+            >
+              <Text style={styles.buttonText}>Next</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1, // Ensure the SafeAreaView takes up the entire screen
+    backgroundColor: '#fff', // Set your desired background color
+  },
   container: {
     flex: 1,
     justifyContent: 'center',

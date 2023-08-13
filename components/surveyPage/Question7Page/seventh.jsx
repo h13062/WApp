@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   TextInput,
   StyleSheet,
+  SafeAreaView,
 } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 
@@ -29,51 +30,57 @@ const SeventhPage = ({ route, navigation }) => {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Sleep and Exercise</Text>
-      <View style={styles.whiteBox}>
-        <TextInput
-          style={styles.inputField}
-          placeholder="Sleep hours/day"
-          keyboardType="numeric"
-          value={sleepHours}
-          onChangeText={setSleepHours}
-        />
-        <DropDownPicker
-          items={exerciseOptions}
-          open={openConditions}
-          setOpen={setOpenConditions}
-          value={exerciseFactor}
-          maxHeight={300}
-          setValue={setExerciseFactor}
-          placeholder="Exercise Factor"
-          containerStyle={styles.dropdownContainer}
-          textStyle={styles.menuTitle}
-        />
-      </View>
+    <SafeAreaView style={styles.safeArea}>
+      <View style={styles.container}>
+        <Text style={styles.title}>Sleep and Exercise</Text>
+        <View style={styles.whiteBox}>
+          <TextInput
+            style={styles.inputField}
+            placeholder="Sleep hours/day"
+            keyboardType="numeric"
+            value={sleepHours}
+            onChangeText={setSleepHours}
+          />
+          <DropDownPicker
+            items={exerciseOptions}
+            open={openConditions}
+            setOpen={setOpenConditions}
+            value={exerciseFactor}
+            maxHeight={300}
+            setValue={setExerciseFactor}
+            placeholder="Exercise Factor"
+            containerStyle={styles.dropdownContainer}
+            textStyle={styles.menuTitle}
+          />
+        </View>
 
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => {
-            navigation.goBack();
-          }}
-        >
-          <Text style={styles.buttonText}>Back</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.button, styles.activeButton]}
-          onPress={handleSubmit}
-          //disabled={!sleepHours || !exerciseFactor}
-        >
-          <Text style={styles.buttonText}>Next</Text>
-        </TouchableOpacity>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => {
+              navigation.goBack();
+            }}
+          >
+            <Text style={styles.buttonText}>Back</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.button, styles.activeButton]}
+            onPress={handleSubmit}
+            //disabled={!sleepHours || !exerciseFactor}
+          >
+            <Text style={styles.buttonText}>Next</Text>
+          </TouchableOpacity>
+        </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1, // Ensure the SafeAreaView takes up the entire screen
+    backgroundColor: '#fff', // Set your desired background color
+  },
   container: {
     flex: 1,
     justifyContent: 'center',
