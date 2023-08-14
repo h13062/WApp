@@ -12,7 +12,7 @@ const SixthPage = ({ route, navigation }) => {
   const [selectedOption, setSelectedOption] = useState(null);
   const [openConditions, setOpenConditions] = useState(false);
   const options = [
-    'No Pregnant or Laciating',
+    'No Pregnant or Lactating',
     'Pregnant - 1st Trimester',
     'Pregnant - 2nd Trimester',
     'Pregnant - 3rd Trimester',
@@ -29,7 +29,7 @@ const SixthPage = ({ route, navigation }) => {
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
         <Text style={styles.title}>Pregnancy and Lactating</Text>
-        <View>
+        <View style={{ zIndex: 999 }}>
           <DropDownPicker
             items={options.map((option) => ({ label: option, value: option }))}
             open={openConditions}
@@ -37,7 +37,8 @@ const SixthPage = ({ route, navigation }) => {
             value={selectedOption}
             setValue={setSelectedOption}
             maxHeight={300}
-            placeholder="Select an option ..."
+            placeholder="No Pregnant or Lactating"
+            placeholderStyle={{ fontSize: 24 }}
             containerStyle={styles.dropdownContainer}
             showTickIcon={true}
             dropDownDirection="BOTTOM"
@@ -83,8 +84,8 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 36,
     fontWeight: 'bold',
-    justifyContent: 'center',
-    marginBottom: 45,
+    textAlign: 'center',
+    marginBottom: 20,
     color: '#fff',
   },
   dropdownContainer: {
@@ -94,7 +95,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: 250,
+    marginTop: 50,
   },
   button: {
     backgroundColor: '#007bff',

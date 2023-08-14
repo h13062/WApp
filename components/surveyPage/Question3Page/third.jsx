@@ -134,6 +134,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 45,
     color: '#fff',
+    textAlign: 'center',
   },
   optionsContainer: {
     width: '100%',

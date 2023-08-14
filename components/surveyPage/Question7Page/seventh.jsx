@@ -68,7 +68,7 @@ const SeventhPage = ({ route, navigation }) => {
             onPress={handleSubmit}
             //disabled={!sleepHours || !exerciseFactor}
           >
-            <Text style={styles.buttonText}>Next</Text>
+            <Text style={styles.buttonText}>Submit</Text>
           </TouchableOpacity>
         </View>
       </View>
