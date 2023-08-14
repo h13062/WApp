@@ -1,6 +1,6 @@
-import { useNavigation } from "@react-navigation/native";
-import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { useNavigation } from '@react-navigation/native';
+import React from 'react';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 
 const NavigationBar = () => {
   const navigation = useNavigation();
@@ -19,7 +19,7 @@ const NavigationBar = () => {
       <TouchableOpacity
         style={styles.navItem}
         onPress={() => {
-          navigation.navigate("BodyIndex");
+          navigation.navigate('BodyIndex');
         }}
       >
         <View>
@@ -42,18 +42,18 @@ const NavigationBar = () => {
 
 const styles = StyleSheet.create({
   container: {
-    width: "100%",
-    height: "100%",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-around",
+    width: '100%',
+    height: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-around',
     flex: 1,
   },
   navItem: {
-    width: "100%",
-    height: "100%",
-    justifyContent: "center",
-    alignItems: "center",
+    width: '100%',
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
     flex: 1,
   },
 });
