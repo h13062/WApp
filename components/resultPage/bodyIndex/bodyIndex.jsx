@@ -7,7 +7,8 @@ import {
   SafeAreaView,
 } from "react-native";
 import NavigationBar from "../../actualComponents/navigationBar";
-import { getVitaminSuggestion } from "../vitaminPage/vitaminSuggestion";
+import { getVitaminSuggestion } from "../vitaminPage/vitaminSuggestion/vitaminSuggestion";
+import { getMineralSuggestion } from "../mineralPage/mineralSuggestion/mineralSuggestion";
 const BodyIndex = ({ route, navigation }) => {
   const {
     age,
@@ -213,6 +214,13 @@ const BodyIndex = ({ route, navigation }) => {
     gender,
     selectedOption
   );
+  const calciumSuggestion = getMineralSuggestion(
+    "Ca", // Specify "Ca" for Calcium
+    age,
+    ageOption,
+    gender,
+    selectedOption
+  );
   console.log(age);
   const handleSubmit = () => {
     console.log("Collected Information:", collectedInformation);
@@ -245,6 +253,9 @@ const BodyIndex = ({ route, navigation }) => {
           </Text>
           <Text style={styles.infoText}>
             Vitamin C Suggestion: {vitaminCSuggestion} mg/d
+          </Text>
+          <Text style={styles.infoText}>
+            Calcium Suggestion Suggestion: {calciumSuggestion} mg/d
           </Text>
         </View>
 

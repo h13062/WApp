@@ -25,6 +25,7 @@ const vitaminGroups = {
       "31–50 y": { female: 1300 },
     },
   },
+
   C: {
     years: {
       "1–3 y": { male: 15, female: 15 },
@@ -51,6 +52,7 @@ const vitaminGroups = {
       "31–50 y": { female: 120 },
     },
   },
+
   D: {
     years: {
       "1–3 y": { male: 15, female: 15 },
@@ -77,6 +79,7 @@ const vitaminGroups = {
       "31–50 y": { female: 15 },
     },
   },
+
   E: {
     years: {
       "1–3 y": { male: 6, female: 6 },
@@ -103,6 +106,7 @@ const vitaminGroups = {
       "31–50 y": { female: 19 },
     },
   },
+
   K: {
     years: {
       "1–3 y": { male: 30, female: 30 },
@@ -129,6 +133,7 @@ const vitaminGroups = {
       "31–50 y": { female: 90 },
     },
   },
+
   B1: {
     years: {
       "1–3 y": { male: 0.5, female: 0.5 },
@@ -155,6 +160,7 @@ const vitaminGroups = {
       "31–50 y": { female: 1.4 },
     },
   },
+
   B2: {
     years: {
       "1–3 y": { male: 0.5, female: 0.5 },
@@ -181,6 +187,7 @@ const vitaminGroups = {
       "31–50 y": { female: 1.6 },
     },
   },
+
   B3: {
     years: {
       "1–3 y": { male: 6, female: 6 },
@@ -207,6 +214,7 @@ const vitaminGroups = {
       "31–50 y": { female: 17 },
     },
   },
+
   B6: {
     years: {
       "1–3 y": { male: 0.5, female: 0.5 },
@@ -233,6 +241,7 @@ const vitaminGroups = {
       "31–50 y": { female: 2 },
     },
   },
+
   B9: {
     years: {
       "1–3 y": { male: 150, female: 150 },
@@ -259,6 +268,7 @@ const vitaminGroups = {
       "31–50 y": { female: 500 },
     },
   },
+
   B12: {
     years: {
       "1–3 y": { male: 0.9, female: 0.9 },
@@ -311,6 +321,7 @@ const vitaminGroups = {
       "31–50 y": { female: 7 },
     },
   },
+
   Biotin: {
     years: {
       "1–3 y": { male: 8, female: 8 },
@@ -337,6 +348,7 @@ const vitaminGroups = {
       "31–50 y": { female: 35 },
     },
   },
+
   Choline: {
     years: {
       "1–3 y": { male: 200, female: 200 },
