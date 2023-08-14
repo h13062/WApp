@@ -6,6 +6,7 @@ import {
   StyleSheet,
   SafeAreaView,
 } from 'react-native';
+import NavigationBar from '../../actualComponents/navigationBar';
 
 const BodyIndex = ({ route, navigation }) => {
   const {
@@ -150,10 +151,10 @@ const BodyIndex = ({ route, navigation }) => {
           <Text style={styles.infoText}>BMI: {bmi}</Text>
           <Text style={styles.infoText}>Calories: {calories}</Text>
           <Text style={styles.infoText}>
-            Calories to lose weight: {calories - 500}
+            Calories to lose weight: {parseFloat(calories) - 500}
           </Text>
           <Text style={styles.infoText}>
-            Calories to gain weight: {calories + 500}
+            Calories to gain weight: {parseFloat(calories) + 500}
           </Text>
           {age && ageOption && (
             <Text style={styles.infoText}>
@@ -176,6 +177,7 @@ const BodyIndex = ({ route, navigation }) => {
           <Text style={styles.buttonText}>Submit</Text>
         </TouchableOpacity>
       </View>
+      <NavigationBar style={{ flex: 1 }} />
     </SafeAreaView>
   );
 };
@@ -186,7 +188,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff', // Set your desired background color
   },
   container: {
-    flex: 1,
+    flex: 9,
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,

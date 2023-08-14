@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -13,6 +13,7 @@ const FifthPage = ({ route, navigation }) => {
   const [openConditions, setOpenConditions] = useState(false);
 
   const conditionOptions = [
+    'No precondition',
     'High blood pressure',
     'Cancer',
     'Heart Related Conditions',
@@ -20,6 +21,14 @@ const FifthPage = ({ route, navigation }) => {
     'Back Pain',
     'Hair Loss',
   ];
+
+  useEffect(() => {
+    // console.log(selectedVitamins);
+    setSelectedConditions(
+      selectedConditions.includes('No precondition') ? [] : selectedConditions
+    );
+    selectedConditions;
+  }, [selectedConditions]);
 
   const handleSubmit = () => {
     navigation.navigate('SixthPage', {
@@ -31,10 +40,8 @@ const FifthPage = ({ route, navigation }) => {
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
-        <Text style={styles.title}>
-          Are these health conditions apply to you?
-        </Text>
-        <View>
+        <Text style={styles.title}>Health Conditions</Text>
+        <View style={{ zIndex: 999 }}>
           <DropDownPicker
             items={conditionOptions.map((condition) => ({
               label: condition,
@@ -45,7 +52,8 @@ const FifthPage = ({ route, navigation }) => {
             value={selectedConditions}
             setValue={setSelectedConditions}
             maxHeight={300}
-            placeholder="Select Conditions..."
+            placeholder="No precondition"
+            placeholderStyle={{ fontSize: 24 }}
             containerStyle={styles.dropdownContainer}
             showTickIcon={true}
             dropDownDirection="BOTTOM"
@@ -93,7 +101,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 36,
     fontWeight: 'bold',
-    marginBottom: 45,
+    marginBottom: 20,
     color: '#fff',
     textAlign: 'center',
   },
@@ -104,7 +112,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: 250,
+    marginTop: 50,
   },
   button: {
     backgroundColor: '#007bff',

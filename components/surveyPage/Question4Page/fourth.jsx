@@ -71,10 +71,6 @@ const FourthPage = ({ route, navigation }) => {
     );
   }, [selectedMinerals]);
 
-  // const onVitaminClick = (value) => {
-  //   setSelectedVitamins(value.includes('No Vitamin Deficiencies') ? [] : value);
-  // };
-
   const handleSubmit = () => {
     // Perform any necessary actions before navigating
     navigation.navigate('FifthPage', {
@@ -84,12 +80,29 @@ const FourthPage = ({ route, navigation }) => {
     });
   };
 
-  const mineralsDropdownMarginTop = openVitamins ? 170 : 10;
+  const mineralsDropdownMarginTop = 10;
+  const [mineralsDropdownZIndex, setMineralsDropdownIndex] = useState(0);
+  const [vitaminDropdownZIndex, setVitaminDropdownIndex] = useState(0);
+
+  useEffect(() => {
+    if (openVitamins) {
+      setOpenMinerals(false);
+      setVitaminDropdownIndex(999);
+    } else setVitaminDropdownIndex(0);
+  }, [openVitamins]);
+
+  useEffect(() => {
+    if (openMinerals) {
+      setOpenVitamins(false);
+      setMineralsDropdownIndex(999);
+    } else setMineralsDropdownIndex(0);
+  }, [openMinerals]);
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
         <Text style={styles.title}>Vitamin and Minerals Deficiencies</Text>
-        <View>
+        <View style={{ zIndex: vitaminDropdownZIndex }}>
           <Text style={styles.subtitle}>Vitamins</Text>
           <DropDownPicker
             items={vitaminOptions}
@@ -98,7 +111,8 @@ const FourthPage = ({ route, navigation }) => {
             value={selectedVitamins}
             setValue={setSelectedVitamins}
             maxHeight={150}
-            // placeholder={openVitamins[0]}
+            placeholder="No Vitamin Deficiencies"
+            placeholderStyle={{ fontSize: 24 }}
             containerStyle={styles.dropdownContainer}
             showTickIcon={true}
             dropDownDirection="BOTTOM"
@@ -109,7 +123,12 @@ const FourthPage = ({ route, navigation }) => {
           />
         </View>
 
-        <View style={{ marginTop: mineralsDropdownMarginTop }}>
+        <View
+          style={{
+            marginTop: mineralsDropdownMarginTop,
+            zIndex: mineralsDropdownZIndex,
+          }}
+        >
           <Text style={styles.subtitle}>Minerals</Text>
           <DropDownPicker
             items={mineralOptions}
@@ -118,7 +137,8 @@ const FourthPage = ({ route, navigation }) => {
             value={selectedMinerals}
             setValue={setSelectedMinerals}
             maxHeight={150}
-            placeholder="Select Minerals..."
+            placeholder="No Minerals Deficiencies"
+            placeholderStyle={{ fontSize: 24 }}
             containerStyle={[styles.dropdownContainer]}
             showTickIcon={true}
             dropDownDirection="BOTTOM"
@@ -166,8 +186,8 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 36,
     fontWeight: 'bold',
-    justifyContent: 'center',
-    marginBottom: 45,
+    textAlign: 'center',
+    marginBottom: 20,
     color: '#fff',
   },
   subtitle: {
@@ -187,7 +207,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: 250,
+    marginTop: 50,
   },
   button: {
     backgroundColor: '#007bff',
