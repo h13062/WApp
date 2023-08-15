@@ -26,7 +26,7 @@ const SixthPage = ({ route, navigation }) => {
     // Perform any necessary actions before navigating
     navigation.navigate("SeventhPage", { ...route.params, selectedOption });
   };
-
+  console.log("six page: ", selectedOption);
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>

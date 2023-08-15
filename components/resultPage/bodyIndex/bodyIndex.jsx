@@ -132,19 +132,33 @@ const BodyIndex = ({ route, navigation }) => {
     return recommendation ? recommendation.toFixed(1) : "N/A";
   };
 
-  const calculateBMI = (weight, heightMeter, heightCentimeter) => {
-    if (selectedOption.includes("Pregnant")) {
-      return "BMI does not apply during Pregnancy";
-    } else if (ageOption === "months" || (ageOption === "years" && age < 3)) {
-      return "BMI does not apply for childrens less than 3 years old";
+  const calculateBMI = (
+    weight,
+    heightMeter,
+    heightCentimeter,
+    selectedOption,
+    ageOption,
+    age
+  ) => {
+    console.log("pregnacy status", selectedOption);
+    if (
+      selectedOption === "No Pregnant or Lactating" ||
+      lactationGroups.includes(selectedOption)
+    ) {
+      console.log("it should be", selectedOption);
+      if (ageOption === "months" || (ageOption === "years" && age < 3)) {
+        return "BMI does not apply for children less than 3 years old";
+      } else {
+        const combinedHeight = (heightMeter + heightCentimeter) / 100;
+        const bmi = weight / (combinedHeight * combinedHeight);
+        return bmi.toFixed(2);
+      }
+    } else if (pregnancyGroups.includes(selectedOption)) {
+      return "BMI does not apply during pregnancy";
     } else {
-      const combinedHeight = (heightMeter + heightCentimeter) / 100;
-
-      const bmi = weight / (combinedHeight * combinedHeight);
-      return bmi.toFixed(2);
+      return "BMI does not apply for this condition";
     }
   };
-
   const calculateBMR = (weight, heightMeter, heightCentimeter, age, gender) => {
     const combinedHeight = parseInt(
       heightMeter /**100 as normal logic but javascript mess up so dont as me why */ +
@@ -157,12 +171,12 @@ const BodyIndex = ({ route, navigation }) => {
     } else if (gender === "female") {
       bmr = 655.1 + 9.563 * weight + 1.85 * combinedHeight - 4.676 * age;
     }
-    console.log("combinedHeight --->", combinedHeight);
-    console.log("Age: ", age);
-    console.log("BMR: ", bmr);
-    console.log("Height Meter: ", heightMeter);
-    console.log("Height feet: ", heightFeet);
-    console.log("Height inches: ", heightInches);
+    // console.log("combinedHeight --->", combinedHeight);
+    // console.log("Age: ", age);
+    // console.log("BMR: ", bmr);
+    // console.log("Height Meter: ", heightMeter);
+    // console.log("Height feet: ", heightFeet);
+    // console.log("Height inches: ", heightInches);
 
     return bmr.toFixed(2);
   };
@@ -173,7 +187,13 @@ const BodyIndex = ({ route, navigation }) => {
 
   const bmr = calculateBMR(weight, heightMeter, heightCentimeter, age, gender);
   const calories = calculateCalories(bmr, exerciseFactor);
-  const bmi = calculateBMI(weight, heightMeter, heightCentimeter);
+  const bmi = calculateBMI(
+    weight,
+    heightMeter,
+    heightCentimeter,
+    selectedOption
+  );
+
   const water = getWaterIntakeSuggestion(
     age,
     ageOption,
