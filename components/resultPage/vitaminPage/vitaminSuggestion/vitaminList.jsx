@@ -295,7 +295,7 @@ const vitaminGroups = {
       "31–50 y": { female: 2.8 },
     },
   },
-  "Pantothenic Acid": {
+  B5: {
     years: {
       "1–3 y": { male: 2, female: 2 },
       "4–8 y": { male: 3, female: 3 },
@@ -322,7 +322,7 @@ const vitaminGroups = {
     },
   },
 
-  Biotin: {
+  B8: {
     years: {
       "1–3 y": { male: 8, female: 8 },
       "4–8 y": { male: 12, female: 12 },

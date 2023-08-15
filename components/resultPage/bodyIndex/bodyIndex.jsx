@@ -7,8 +7,6 @@ import {
   SafeAreaView,
 } from "react-native";
 import NavigationBar from "../../actualComponents/navigationBar";
-import { getVitaminSuggestion } from "../vitaminPage/vitaminSuggestion/vitaminSuggestion";
-import { getMineralSuggestion } from "../mineralPage/mineralSuggestion/mineralSuggestion";
 const BodyIndex = ({ route, navigation }) => {
   const {
     age,
@@ -51,7 +49,6 @@ const BodyIndex = ({ route, navigation }) => {
     weight,
     weightUnit,
   };
-
   const pregnancyGroups = [
     "Pregnant - 1st Trimester",
     "Pregnant - 2nd Trimester",
@@ -183,51 +180,10 @@ const BodyIndex = ({ route, navigation }) => {
     gender,
     selectedOption
   );
-  const vitaminNames = [
-    "A",
-    "C",
-    "D",
-    "E",
-    "K",
-    "B1",
-    "B2",
-    "B3",
-    "B6",
-    "B9",
-    "B12",
-    "Pantothenic Acid",
-    "Biotin",
-    "Choline",
-  ];
-  const vitaminASuggestion = getVitaminSuggestion(
-    "A", // Specify "A" for Vitamin A
-    age,
-    ageOption,
-    gender,
-    selectedOption
-  );
-
-  const vitaminCSuggestion = getVitaminSuggestion(
-    "C", // Specify "C" for Vitamin C
-    age,
-    ageOption,
-    gender,
-    selectedOption
-  );
-  const calciumSuggestion = getMineralSuggestion(
-    "Ca", // Specify "Ca" for Calcium
-    age,
-    ageOption,
-    gender,
-    selectedOption
-  );
   console.log(age);
   const handleSubmit = () => {
-    console.log("Collected Information:", collectedInformation);
-    // Perform any other actions you need here
-
-    // Navigate to the next page if needed
-    // navigation.navigate("NinthPage");
+    //console.log("Collected Information:", collectedInformation);
+    navigation.navigate("MineralPage", { ...route.params });
   };
 
   return (
@@ -248,15 +204,6 @@ const BodyIndex = ({ route, navigation }) => {
               Recommended Daily Water Intake: {water} L
             </Text>
           )}
-          <Text style={styles.infoText}>
-            Vitamin A Suggestion: {vitaminASuggestion} μg/d
-          </Text>
-          <Text style={styles.infoText}>
-            Vitamin C Suggestion: {vitaminCSuggestion} mg/d
-          </Text>
-          <Text style={styles.infoText}>
-            Calcium Suggestion Suggestion: {calciumSuggestion} mg/d
-          </Text>
         </View>
 
         <TouchableOpacity
@@ -272,7 +219,6 @@ const BodyIndex = ({ route, navigation }) => {
           <Text style={styles.buttonText}>Submit</Text>
         </TouchableOpacity>
       </View>
-      <NavigationBar style={{ flex: 1 }} />
     </SafeAreaView>
   );
 };

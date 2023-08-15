@@ -13,6 +13,8 @@ import FifthPage from "../components/surveyPage/Question5Page/fifth";
 import SixthPage from "../components/surveyPage/Question6Page/sixth";
 import SeventhPage from "../components/surveyPage/Question7Page/seventh";
 import BodyIndex from "../components/resultPage/bodyIndex/bodyIndex";
+import MineralPage from "../components/resultPage/mineralPage/mineralPage";
+import VitaminPage from "../components/resultPage/vitaminPage/vitaminPage";
 const Stack = createStackNavigator();
 const App = () => {
   return (
@@ -73,12 +75,16 @@ const App = () => {
         component={BodyIndex}
         options={{ title: "BodyIndex", headerShown: false }}
       />
-      {/* <Stack.Screen name="Form" component={Form} options={{ title: "Form" }} /> */}
-      {/* <Stack.Screen
-        name="Calculator"
-        component={Calculator}
-        options={{ title: "Calculator" }}
-      /> */}
+      <Stack.Screen
+        name="MineralPage"
+        component={MineralPage}
+        options={{ title: "MineralPage", headerShown: false }}
+      />
+      <Stack.Screen
+        name="VitaminPage"
+        component={VitaminPage}
+        options={{ title: "VitaminPage", headerShown: false }}
+      />
     </Stack.Navigator>
   );
 };
