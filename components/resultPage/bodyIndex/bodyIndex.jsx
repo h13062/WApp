@@ -149,7 +149,9 @@ const BodyIndex = ({ route, navigation }) => {
       if (ageOption === "months" || (ageOption === "years" && age < 3)) {
         return "BMI does not apply for children less than 3 years old";
       } else {
-        const combinedHeight = (heightMeter + heightCentimeter) / 100;
+        const combinedHeight = (heightMeter * 100 + heightCentimeter) / 100;
+        console.log("calculateBMI --> combinedHeight:", combinedHeight);
+        console.log("calculateBMI --> weight:", weight);
         const bmi = weight / (combinedHeight * combinedHeight);
         return bmi.toFixed(2);
       }

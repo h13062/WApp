@@ -17,140 +17,98 @@ import { SafeAreaView } from "react-native";
 const SecondPage = ({ route, navigation }) => {
   const { username } = route.params;
 
-  const [measurementUnit, setMeasurementUnit] = useState("metric");
-  const [heightMeter, setHeightMeter] = useState("");
-  const [heightCentimeter, setHeightCentimeter] = useState("");
-  const [heightFeet, setHeightFeet] = useState(0);
-  const [heightInches, setHeightInches] = useState(0);
-  const [weight, setWeight] = useState("");
-  const [weightTest, setWeightTest] = useState("");
+  const [isMetricMeasurement, setIsMetricMeasurement] = useState(true);
+
+  // Measurement in Metric
+  const [heightInMeters, setHeightInMeters] = useState(0);
+  const [heightInCentimeters, setHeightInCentimeters] = useState(0);
+  const [weightInKg, setWeightInKg] = useState(0);
+
+  // Measurement in Imperial
+  const [heightInFeet, setHeightInFeet] = useState(0);
+  const [heightInInches, setHeightInInches] = useState(0);
+  const [weightInLbs, setWeightInLbs] = useState(0);
+
   const [weightUnit, setWeightUnit] = useState("kg");
 
-  const [heightValid, setHeightValid] = useState(true);
-  const [weightValid, setWeightValid] = useState(true);
+  // Output parameter to throw to other component
+  const [outputHeight, setOutputHeight] = useState(0);
+  const [outputWeight, setOutputWeight] = useState(0);
 
   const handleSubmit = () => {
-    if (heightValid && weightValid) {
-      navigation.navigate("ThirdPage", {
-        ...route.params,
-        username,
-        measurementUnit,
-        heightMeter,
-        heightCentimeter,
-        heightFeet,
-        heightInches,
-        weight,
-        weightUnit,
-      });
-    }
+    convertHeightToMetric();
+    convertWeightToKg();
+    console.log("Submitted parameters:", {
+      heightMeter: heightInMeters,
+      heightCentimeter: heightInCentimeters,
+      weight: weightInKg,
+    });
+    navigation.navigate("ThirdPage", {
+      ...route.params,
+      username,
+      // measurementUnit,
+      heightMeter: heightInMeters,
+      heightCentimeter: heightInCentimeters,
+      weight: weightInKg,
+      // weightUnit,
+    });
   };
 
-  const convertToImperial = () => {
-    if (heightCentimeter.length == 0 && heightMeter.length == 0) {
-      return;
-    }
-    if (isNaN(heightCentimeter) && isNaN(heightMeter)) {
-      return;
-    }
-
-    const totalInches =
-      parseFloat(heightMeter) * 39.37 + parseFloat(heightCentimeter) / 2.54;
+  const convertHeightToImperial = () => {
+    const totalInches = heightInMeters * 39.37 + heightInCentimeters / 2.54;
+    console.log("convertHeightToImperial --> totalInches: ", totalInches);
     const feet = Math.floor(totalInches / 12);
+    console.log("convertHeightToImperial --> feet: ", feet);
     const inches = Math.ceil(totalInches % 12);
-    setHeightFeet(feet.toString());
-    setHeightInches(inches.toString());
+    console.log("convertHeightToImperial --> inches: ", inches);
+    setHeightInFeet(feet);
+    setHeightInInches(inches);
   };
 
-  const convertToMetric = () => {
-    if (heightFeet.length == 0 && heightInches.length == 0) {
-      return;
-    }
-    if (isNaN(heightFeet) && isNaN(heightInches)) {
-      return;
-    }
-    const totalInches = parseInt(heightFeet) * 12 + parseInt(heightInches);
-    const centimeters = (totalInches * 2.54).toFixed(2);
-
+  const convertHeightToMetric = () => {
+    const totalInches = parseInt(heightInFeet * 12) + parseInt(heightInInches);
+    console.log("convertHeightToMetric --> totalInches: ", totalInches);
+    const centimeters = parseInt(totalInches * 2.54).toFixed(2);
+    console.log("convertHeightToMetric --> centimeters: ", centimeters);
     const meters = Math.floor(centimeters / 100);
+    console.log("convertHeightToMetric --> meters: ", meters);
     const remainingCentimeters = Math.floor(centimeters % 100);
-
-    setHeightMeter(meters.toString());
-    setHeightCentimeter(remainingCentimeters.toString());
+    console.log(
+      "convertHeightToMetric --> remainingCentimeters: ",
+      remainingCentimeters
+    );
+    setHeightInMeters(meters);
+    setHeightInCentimeters(remainingCentimeters);
   };
 
-  const convertToKg = (weight) => {
-    if (weight.length == 0) {
-      return;
+  const convertWeightToKg = () => {
+    if (weightInLbs > 0) {
+      const kilograms = weightInLbs * 0.45359237;
+      setWeightInKg(kilograms.toFixed(2));
     }
-    if (isNaN(weight)) {
-      return;
-    }
-    const kilograms = parseFloat(weight) * 0.45359237;
-    // setWeight(kilograms.toFixed(2).toString());
-    return kilograms.toFixed(2).toString();
   };
 
-  const convertToLb = () => {
-    if (weight.length == 0) {
-      return;
+  const convertWeightToLbs = () => {
+    if (weightInKg > 0) {
+      const pounds = weightInKg / 0.45359237;
+      setWeightInLbs(pounds.toFixed(2));
     }
-    if (isNaN(weight)) {
-      return;
-    }
-    const pound = parseFloat(weight) / 0.45359237;
-    setWeight(pound.toFixed(2).toString());
   };
 
   const onMetricClick = () => {
-    setMeasurementUnit("metric");
-    convertToMetric();
-    if (weightUnit != "kg") {
-      convertToKg();
-    }
+    setIsMetricMeasurement(true);
+    convertHeightToMetric();
+    convertWeightToKg();
     setWeightUnit("kg");
   };
 
   const onImperialClick = () => {
-    setMeasurementUnit("imperial");
-    convertToImperial();
-    if (weightUnit != "lbs") {
-      convertToLb();
-    }
+    setIsMetricMeasurement(false);
+    convertHeightToImperial();
+    convertWeightToLbs();
     setWeightUnit("lbs");
   };
 
-  useEffect(() => {
-    convertToMetric();
-  }, [heightFeet, heightInches]);
-
-  // useEffect(() => {
-  //   convertToImperial();
-  // }, [measurementUnit, heightMeter, heightCentimeter]);
-
-  useEffect(() => {
-    const heightIsValid =
-      (measurementUnit === "metric" &&
-        heightMeter !== "" &&
-        heightCentimeter !== "") ||
-      (measurementUnit === "imperial" &&
-        heightFeet !== "" &&
-        heightInches !== "");
-    const weightIsValid = weight !== "";
-
-    setHeightValid(heightIsValid);
-    setWeightValid(weightIsValid);
-  }, [
-    measurementUnit,
-    heightMeter,
-    heightCentimeter,
-    heightFeet,
-    heightInches,
-    weight,
-  ]);
-  // console.log("height in meter value: ", heightMeter);
-  // console.log("height in centimeter value: ", heightCentimeter);
-  // console.log("height in feet value: ", heightFeet);
-  // console.log("height in inches value: ", heightInches);
   return (
     <SafeAreaView style={styles.safeArea}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -171,36 +129,31 @@ const SecondPage = ({ route, navigation }) => {
                     <TouchableOpacity
                       style={[
                         styles.radioButton,
-                        measurementUnit === "metric" &&
-                          styles.radioButtonSelected,
+                        isMetricMeasurement && styles.radioButtonSelected,
                       ]}
-                      onPress={() => setMeasurementUnit("metric")}
+                      onPress={() => setIsMetricMeasurement(true)}
                     >
                       <Text
                         style={[
                           styles.radioLabel,
-                          measurementUnit === "metric" &&
-                            styles.radioLabelSelected,
+                          isMetricMeasurement && styles.radioLabelSelected,
                         ]}
                         onPress={onMetricClick}
                       >
                         Metric
                       </Text>
                     </TouchableOpacity>
-
                     <TouchableOpacity
                       style={[
                         styles.radioButton,
-                        measurementUnit === "imperial" &&
-                          styles.radioButtonSelected,
+                        !isMetricMeasurement && styles.radioButtonSelected,
                       ]}
                       onPress={onImperialClick}
                     >
                       <Text
                         style={[
                           styles.radioLabel,
-                          measurementUnit === "imperial" &&
-                            styles.radioLabelSelected,
+                          !isMetricMeasurement && styles.radioLabelSelected,
                         ]}
                       >
                         Imperial
@@ -208,24 +161,31 @@ const SecondPage = ({ route, navigation }) => {
                     </TouchableOpacity>
                   </View>
                 </View>
-
                 <View style={styles.questionContainer}>
                   <Text style={styles.label}>Height</Text>
                   <View style={styles.inputContainer}>
-                    {measurementUnit === "metric" ? (
+                    {isMetricMeasurement ? (
                       <>
                         <TextInput
                           placeholder="Meters"
-                          value={heightMeter}
-                          onChangeText={(text) => setHeightMeter(text)}
+                          value={
+                            heightInMeters !== 0
+                              ? heightInMeters.toString()
+                              : ""
+                          }
+                          onChangeText={(text) => setHeightInMeters(text)}
                           style={[styles.input, styles.smallInput]}
                           keyboardType="numeric"
                         />
                         <Text style={styles.unitText}>m</Text>
                         <TextInput
                           placeholder="Centimeters"
-                          value={heightCentimeter}
-                          onChangeText={(text) => setHeightCentimeter(text)}
+                          value={
+                            heightInCentimeters !== 0
+                              ? heightInCentimeters.toString()
+                              : ""
+                          }
+                          onChangeText={(text) => setHeightInCentimeters(text)}
                           style={[styles.input, styles.smallInput]}
                           keyboardType="numeric"
                         />
@@ -235,13 +195,11 @@ const SecondPage = ({ route, navigation }) => {
                       <>
                         <TextInput
                           placeholder="Feet"
-                          // value={heightFeet}
+                          value={
+                            heightInFeet !== 0 ? heightInFeet.toString() : ""
+                          }
                           onChangeText={(text) => {
-                            const totalInches = parseInt(text) * 12;
-                            const centimeters = (totalInches * 2.54).toFixed(2);
-
-                            setHeightCentimeter(centimeters);
-                            // setHeightFeet(text)
+                            setHeightInFeet(text);
                           }}
                           style={[styles.input, styles.smallInput]}
                           keyboardType="numeric"
@@ -249,12 +207,13 @@ const SecondPage = ({ route, navigation }) => {
                         <Text style={styles.unitText}>ft</Text>
                         <TextInput
                           placeholder="Inches"
-                          //value={heightInches}
+                          value={
+                            heightInInches !== 0
+                              ? heightInInches.toString()
+                              : ""
+                          }
                           onChangeText={(text) => {
-                            const centimeters = (parseInt(text) * 2.54).toFixed(
-                              2
-                            );
-                            setHeightInches(text);
+                            setHeightInInches(text);
                           }}
                           style={[styles.input, styles.smallInput]}
                           keyboardType="numeric"
@@ -263,40 +222,36 @@ const SecondPage = ({ route, navigation }) => {
                       </>
                     )}
                   </View>
-                  {!heightValid && (
-                    <Text style={styles.warningText}>
-                      {measurementUnit === "metric"
-                        ? "Please enter height in meters and cm."
-                        : "Please enter height in feet and inches."}
-                    </Text>
-                  )}
                 </View>
 
                 <View style={styles.questionContainer}>
                   <Text style={styles.label}>Weight</Text>
                   <View style={styles.inputContainer}>
                     <TextInput
-                      placeholder={measurementUnit === "metric" ? "kg" : "lbs"}
-                      //value={weight}
+                      placeholder={isMetricMeasurement ? "kg" : "lbs"}
+                      value={
+                        isMetricMeasurement
+                          ? weightInKg !== 0
+                            ? weightInKg.toString()
+                            : ""
+                          : weightInLbs !== 0
+                          ? weightInLbs.toString()
+                          : ""
+                      }
                       onChangeText={(text) => {
-                        setWeight(text);
-                        if (measurementUnit !== "metric") {
-                          setWeight(convertToKg(text));
+                        if (isMetricMeasurement) {
+                          setWeightInKg(text);
+                        } else {
+                          setWeightInLbs(text);
                         }
                       }}
                       style={[styles.input, styles.smallInput]}
                       keyboardType="numeric"
                     />
                     <Text style={styles.unitText}>
-                      {measurementUnit === "metric" ? "kg" : "lbs"}
+                      {isMetricMeasurement ? "kg" : "lbs"}
                     </Text>
                   </View>
-                  {!weightValid && (
-                    <Text style={styles.warningText}>
-                      Please enter weight in{" "}
-                      {measurementUnit === "metric" ? "kg" : "lbs"}.
-                    </Text>
-                  )}
                 </View>
               </View>
 
@@ -313,9 +268,9 @@ const SecondPage = ({ route, navigation }) => {
                   style={[
                     styles.button,
                     styles.buttonBoth,
-                    (!heightValid || !weightValid) && styles.disabledButton,
+                    styles.disabledButton,
                   ]}
-                  disabled={!heightValid || !weightValid}
+                  disabled={false}
                 >
                   <Text style={styles.buttonText}>Next</Text>
                 </TouchableOpacity>
