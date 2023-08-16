@@ -160,6 +160,13 @@ const BodyIndex = ({ route, navigation }) => {
     }
   };
   const calculateBMR = (weight, heightMeter, heightCentimeter, age, gender) => {
+    console.log("calculate BMR paramenters: ", {
+      weight,
+      heightMeter,
+      heightCentimeter,
+      age,
+      gender,
+    });
     const combinedHeight = parseInt(
       heightMeter /**100 as normal logic but javascript mess up so dont as me why */ +
         heightCentimeter

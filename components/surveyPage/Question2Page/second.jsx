@@ -20,9 +20,10 @@ const SecondPage = ({ route, navigation }) => {
   const [measurementUnit, setMeasurementUnit] = useState("metric");
   const [heightMeter, setHeightMeter] = useState("");
   const [heightCentimeter, setHeightCentimeter] = useState("");
-  const [heightFeet, setHeightFeet] = useState("");
-  const [heightInches, setHeightInches] = useState("");
+  const [heightFeet, setHeightFeet] = useState(0);
+  const [heightInches, setHeightInches] = useState(0);
   const [weight, setWeight] = useState("");
+  const [weightTest, setWeightTest] = useState("");
   const [weightUnit, setWeightUnit] = useState("kg");
 
   const [heightValid, setHeightValid] = useState(true);
@@ -59,6 +60,7 @@ const SecondPage = ({ route, navigation }) => {
     setHeightFeet(feet.toString());
     setHeightInches(inches.toString());
   };
+
   const convertToMetric = () => {
     if (heightFeet.length == 0 && heightInches.length == 0) {
       return;
@@ -76,7 +78,7 @@ const SecondPage = ({ route, navigation }) => {
     setHeightCentimeter(remainingCentimeters.toString());
   };
 
-  const convertToKg = () => {
+  const convertToKg = (weight) => {
     if (weight.length == 0) {
       return;
     }
@@ -84,7 +86,8 @@ const SecondPage = ({ route, navigation }) => {
       return;
     }
     const kilograms = parseFloat(weight) * 0.45359237;
-    setWeight(kilograms.toFixed(2).toString());
+    // setWeight(kilograms.toFixed(2).toString());
+    return kilograms.toFixed(2).toString();
   };
 
   const convertToLb = () => {
@@ -116,6 +119,10 @@ const SecondPage = ({ route, navigation }) => {
     setWeightUnit("lbs");
   };
 
+  useEffect(() => {
+    convertToMetric();
+  }, [heightFeet, heightInches]);
+
   // useEffect(() => {
   //   convertToImperial();
   // }, [measurementUnit, heightMeter, heightCentimeter]);
@@ -140,7 +147,10 @@ const SecondPage = ({ route, navigation }) => {
     heightInches,
     weight,
   ]);
-
+  // console.log("height in meter value: ", heightMeter);
+  // console.log("height in centimeter value: ", heightCentimeter);
+  // console.log("height in feet value: ", heightFeet);
+  // console.log("height in inches value: ", heightInches);
   return (
     <SafeAreaView style={styles.safeArea}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -225,16 +235,27 @@ const SecondPage = ({ route, navigation }) => {
                       <>
                         <TextInput
                           placeholder="Feet"
-                          value={heightFeet}
-                          onChangeText={(text) => setHeightFeet(text)}
+                          // value={heightFeet}
+                          onChangeText={(text) => {
+                            const totalInches = parseInt(text) * 12;
+                            const centimeters = (totalInches * 2.54).toFixed(2);
+
+                            setHeightCentimeter(centimeters);
+                            // setHeightFeet(text)
+                          }}
                           style={[styles.input, styles.smallInput]}
                           keyboardType="numeric"
                         />
                         <Text style={styles.unitText}>ft</Text>
                         <TextInput
                           placeholder="Inches"
-                          value={heightInches}
-                          onChangeText={(text) => setHeightInches(text)}
+                          //value={heightInches}
+                          onChangeText={(text) => {
+                            const centimeters = (parseInt(text) * 2.54).toFixed(
+                              2
+                            );
+                            setHeightInches(text);
+                          }}
                           style={[styles.input, styles.smallInput]}
                           keyboardType="numeric"
                         />
@@ -256,8 +277,13 @@ const SecondPage = ({ route, navigation }) => {
                   <View style={styles.inputContainer}>
                     <TextInput
                       placeholder={measurementUnit === "metric" ? "kg" : "lbs"}
-                      value={weight}
-                      onChangeText={(text) => setWeight(text)}
+                      //value={weight}
+                      onChangeText={(text) => {
+                        setWeight(text);
+                        if (measurementUnit !== "metric") {
+                          setWeight(convertToKg(text));
+                        }
+                      }}
                       style={[styles.input, styles.smallInput]}
                       keyboardType="numeric"
                     />
