@@ -1,6 +1,7 @@
 import { View, Text } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Login from "../components/loginPage/login";
 // import Landing from "../components/landingPage/landing";
 // import Form from "../components/formPage/form";
@@ -16,25 +17,23 @@ import BodyIndex from "../components/resultPage/bodyIndex/bodyIndex";
 import MineralPage from "../components/resultPage/mineralPage/mineralPage";
 import VitaminPage from "../components/resultPage/vitaminPage/vitaminPage";
 const Stack = createStackNavigator();
+const Tab = createBottomTabNavigator();
+
+const TabNavigator = () => (
+  <Tab.Navigator>
+    <Tab.Screen name="BodyIndex" component={BodyIndex} />
+    <Tab.Screen name="MineralPage" component={MineralPage} />
+    <Tab.Screen name="VitaminPage" component={VitaminPage} />
+  </Tab.Navigator>
+);
 const App = () => {
   return (
-    // <View
-    //   style={{
-    //     flex: 1,
-    //     padding: 0,
-    //     margin: 0,
-    //   }}
-    // >
-    //   {/* <Login /> */}
-    //   {/* <Landing /> */}
-    //   <Form />
-    // </View>
-    <Stack.Navigator initialRouteName="Login">
-      <Stack.Screen
+    <Stack.Navigator initialRouteName="FirstPage">
+      {/* <Stack.Screen
         name="Login"
         component={Login}
         options={{ title: "Login", headerShown: false }}
-      />
+      /> */}
       <Stack.Screen
         name="FirstPage"
         component={FirstPage}

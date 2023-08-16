@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { getVitaminSuggestion } from "./vitaminSuggestion/vitaminSuggestion";
-
+import NavigationBar from "../../navigationBar/navigationBar";
 const VitaminPage = ({ route, navigation }) => {
   const vitaminNames = [
     "A",
@@ -80,14 +80,8 @@ const VitaminPage = ({ route, navigation }) => {
         keyExtractor={(item) => item}
         contentContainerStyle={styles.flatListContainer}
       />
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => {
-          navigation.goBack();
-        }}
-      >
-        <Text style={styles.buttonText}>Back</Text>
-      </TouchableOpacity>
+
+      <NavigationBar navigation={navigation} routeParams={route.params} />
     </SafeAreaView>
   );
 };

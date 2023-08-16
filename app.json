@@ -5,6 +5,16 @@
       "bundler": "metro"
     },
     "name": "Water",
-    "slug": "Water"
+    "slug": "Water",
+    "icon": "assets/app-icon.png",
+    "android": {
+      "foregroundImage": "assets/app-icon.png",
+      "package": "com.ghb0024.Water"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "e6f6200d-9cfb-4be0-a3c1-c3984cfbd696"
+      }
+    }
   }
 }

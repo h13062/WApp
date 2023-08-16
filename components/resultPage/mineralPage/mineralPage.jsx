@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { getMineralSuggestion } from "./mineralSuggestion/mineralSuggestion";
+import NavigationBar from "../../navigationBar/navigationBar";
 
 const MineralPage = ({ route, navigation }) => {
   const mineralNames = [
@@ -85,17 +86,8 @@ const MineralPage = ({ route, navigation }) => {
         keyExtractor={(item) => item}
         contentContainerStyle={styles.flatListContainer}
       />
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => {
-          navigation.goBack();
-        }}
-      >
-        <Text style={styles.buttonText}>Back</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
-        <Text style={styles.buttonText}>Vitamins</Text>
-      </TouchableOpacity>
+
+      <NavigationBar navigation={navigation} routeParams={route.params} />
     </SafeAreaView>
   );
 };
@@ -168,7 +160,6 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: "white",
-    fontSize: 16,
     fontWeight: "bold",
   },
   submitButton: {

@@ -6,7 +6,7 @@ import {
   StyleSheet,
   SafeAreaView,
 } from "react-native";
-import NavigationBar from "../../actualComponents/navigationBar";
+import NavigationBar from "../../navigationBar/navigationBar";
 const BodyIndex = ({ route, navigation }) => {
   const {
     age,
@@ -234,11 +234,8 @@ const BodyIndex = ({ route, navigation }) => {
         >
           <Text style={styles.buttonText}>Back</Text>
         </TouchableOpacity>
-
-        <TouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
-          <Text style={styles.buttonText}>Submit</Text>
-        </TouchableOpacity>
       </View>
+      <NavigationBar navigation={navigation} routeParams={route.params} />
     </SafeAreaView>
   );
 };
@@ -246,7 +243,8 @@ const BodyIndex = ({ route, navigation }) => {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1, // Ensure the SafeAreaView takes up the entire screen
-    backgroundColor: "#fff", // Set your desired background color
+    backgroundColor:
+      "linear-gradient(0deg, rgba(0,32,76,1) 0%, rgba(163,224,247,1) 100%)", // Set your desired background color
   },
   container: {
     flex: 9,

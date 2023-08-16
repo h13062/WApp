@@ -73,7 +73,8 @@ const SixthPage = ({ route, navigation }) => {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1, // Ensure the SafeAreaView takes up the entire screen
-    backgroundColor: "#fff", // Set your desired background color
+    backgroundColor:
+      "linear-gradient(0deg, rgba(0,32,76,1) 0%, rgba(163,224,247,1) 100%)", // Set your desired background color
   },
   container: {
     flex: 1,
