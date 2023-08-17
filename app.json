@@ -7,9 +7,22 @@
     "name": "Water",
     "slug": "Water",
     "icon": "assets/app-icon.png",
+    "splash": {
+      "image": "assets/splash-screen.png",
+      "resizeMode": "contain",
+      "backgroundColor": "black"
+    },
     "android": {
       "foregroundImage": "assets/app-icon.png",
       "package": "com.ghb0024.Water"
+    },
+    "ios": {
+      "supportTablet": true,
+      "splash": {
+        "image": "assets/splash-screen.png",
+        "resizeMode": "contain",
+        "backgroundColor": "black"
+      }
     },
     "extra": {
       "eas": {

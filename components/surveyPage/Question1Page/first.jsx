@@ -1,18 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
   TextInput,
-  Button,
   StyleSheet,
-  ScrollView,
   TouchableOpacity,
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
   Keyboard,
 } from "react-native";
-import { Picker } from "@react-native-picker/picker";
-import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { SafeAreaView } from "react-native";
 
 const FirstPage = ({ navigation }) => {
@@ -21,10 +18,25 @@ const FirstPage = ({ navigation }) => {
   const [age, setAge] = useState("");
   const [ageOption, setAgeOption] = useState("years");
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     console.log("Name:", name);
     console.log("Gender:", gender);
     console.log("Age:", age, ageOption);
+
+    try {
+      await AsyncStorage.setItem(
+        "userData",
+        JSON.stringify({
+          username: name,
+          gender: gender,
+          age: age,
+          ageOption: ageOption,
+        })
+      );
+      console.log("User data saved successfully!");
+    } catch (error) {
+      console.error("Error saving user data:", error);
+    }
 
     navigation.navigate("SecondPage", {
       username: name,
@@ -33,6 +45,25 @@ const FirstPage = ({ navigation }) => {
       ageOption: ageOption,
     });
   };
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const userData = await AsyncStorage.getItem("userData");
+        if (userData) {
+          const parsedUserData = JSON.parse(userData);
+          setName(parsedUserData.username);
+          setGender(parsedUserData.gender);
+          setAge(parsedUserData.age);
+          setAgeOption(parsedUserData.ageOption);
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    fetchUserData();
+  }, []);
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -93,7 +124,7 @@ const FirstPage = ({ navigation }) => {
             </View>
 
             <View style={styles.questionContainer}>
-              <Text style={styles.label}>Age (years or months)</Text>
+              <Text style={styles.label}>Age (in years)</Text>
               <View style={styles.radioContainer}>
                 <TouchableOpacity
                   style={[
@@ -109,23 +140,6 @@ const FirstPage = ({ navigation }) => {
                     ]}
                   >
                     Years
-                  </Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                  style={[
-                    styles.radioButton,
-                    ageOption === "months" && styles.radioButtonSelected,
-                  ]}
-                  onPress={() => setAgeOption("months")}
-                >
-                  <Text
-                    style={[
-                      styles.radioLabel,
-                      ageOption === "months" && styles.radioLabelSelected,
-                    ]}
-                  >
-                    Months
                   </Text>
                 </TouchableOpacity>
               </View>
@@ -147,23 +161,10 @@ const FirstPage = ({ navigation }) => {
                 style={styles.input}
                 keyboardType="numeric"
               />
-
-              {ageOption === "months" && parseInt(age) > 12 && (
-                <Text style={styles.warningText}>
-                  Please enter a value less than or equal to 12 for months.
-                </Text>
-              )}
             </View>
           </View>
 
           <View style={styles.buttonContainer}>
-            <TouchableOpacity
-              onPress={() => navigation.goBack()}
-              style={[styles.button, styles.previousButton]}
-            >
-              <Text style={styles.buttonText}>Back</Text>
-            </TouchableOpacity>
-
             <TouchableOpacity
               onPress={handleSubmit}
               style={[

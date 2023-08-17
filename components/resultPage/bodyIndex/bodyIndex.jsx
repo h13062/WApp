@@ -62,7 +62,6 @@ const BodyIndex = ({ route, navigation }) => {
   ];
   const getWaterIntakeSuggestion = (age, ageOption, gender, selectedOption) => {
     console.log("age:", age);
-    console.log("ageOption:", ageOption);
     console.log("gender:", gender);
     console.log("selectedOption:", selectedOption);
     const waterRecommendations = {
