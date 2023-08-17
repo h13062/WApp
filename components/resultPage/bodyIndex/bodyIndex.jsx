@@ -227,7 +227,9 @@ const BodyIndex = ({ route, navigation }) => {
         >
           <Text style={[styles.buttonText, { fontSize: 20 }]}>Back</Text>
         </TouchableOpacity>
-        <Text style={styles.title}>Collected Information</Text>
+        <Text style={styles.title}>
+          {username}'s index with water intake suggeston
+        </Text>
         <View style={styles.whiteBox}>
           <Text style={styles.infoText}>BMI: {bmi}</Text>
           <Text style={styles.infoText}>Calories: {calories}</Text>
@@ -275,6 +277,7 @@ const styles = StyleSheet.create({
       "linear-gradient(0deg, rgba(0,32,76,1) 0%, rgba(163,224,247,1) 100%)",
   },
   title: {
+    marginTop: 30,
     fontSize: 36,
     fontWeight: "bold",
     marginBottom: 45,
