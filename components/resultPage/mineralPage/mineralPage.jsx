@@ -79,6 +79,14 @@ const MineralPage = ({ route, navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
+      <TouchableOpacity
+        style={[styles.headerBackButton, { marginTop: 40 }]}
+        onPress={() => {
+          navigation.goBack();
+        }}
+      >
+        <Text style={[styles.buttonText, { fontSize: 20 }]}>Back</Text>
+      </TouchableOpacity>
       <Text style={styles.titles}>Daily Minerals Suggestions</Text>
       <FlatList
         data={mineralNames}
@@ -94,7 +102,7 @@ const MineralPage = ({ route, navigation }) => {
 
 const styles = StyleSheet.create({
   titles: {
-    marginTop: 20,
+    marginTop: 60,
     textAlign: "center",
     color: "white",
     fontSize: 36,
@@ -157,6 +165,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 20,
     alignSelf: "center",
+  },
+  headerBackButton: {
+    position: "absolute",
+    top: 15,
+    left: 20,
   },
   buttonText: {
     color: "white",

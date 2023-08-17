@@ -7,6 +7,7 @@ import {
   SafeAreaView,
 } from "react-native";
 import NavigationBar from "../../navigation/navigationBar";
+import { HeaderBackButton } from "@react-navigation/stack";
 const BodyIndex = ({ route, navigation }) => {
   const {
     age,
@@ -212,13 +213,20 @@ const BodyIndex = ({ route, navigation }) => {
   );
   console.log(age);
   const handleSubmit = () => {
-    //console.log("Collected Information:", collectedInformation);
     navigation.navigate("MineralPage", { ...route.params });
   };
 
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
+        <TouchableOpacity
+          style={[styles.headerBackButton, { marginTop: 40 }]}
+          onPress={() => {
+            navigation.goBack();
+          }}
+        >
+          <Text style={[styles.buttonText, { fontSize: 20 }]}>Back</Text>
+        </TouchableOpacity>
         <Text style={styles.title}>Collected Information</Text>
         <View style={styles.whiteBox}>
           <Text style={styles.infoText}>BMI: {bmi}</Text>
@@ -286,6 +294,11 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     paddingHorizontal: 40,
     marginTop: 20,
+  },
+  headerBackButton: {
+    position: "absolute",
+    top: 15,
+    left: 20,
   },
   button: {
     backgroundColor: "#007bff",

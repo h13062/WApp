@@ -1,11 +1,6 @@
-import { View, Text } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import Login from "../components/loginPage/login";
-// import Landing from "../components/landingPage/landing";
-// import Form from "../components/formPage/form";
-// import Calculator from "../components/calculatorPage/calculator";
 import FirstPage from "../components/surveyPage/Question1Page/first";
 import SecondPage from "../components/surveyPage/Question2Page/second";
 import ThirdPage from "../components/surveyPage/Question3Page/third";

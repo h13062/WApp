@@ -74,6 +74,14 @@ const VitaminPage = ({ route, navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
+      <TouchableOpacity
+        style={[styles.headerBackButton, { marginTop: 40 }]}
+        onPress={() => {
+          navigation.goBack();
+        }}
+      >
+        <Text style={[styles.buttonText, { fontSize: 20 }]}>Back</Text>
+      </TouchableOpacity>
       <Text style={styles.titles}>Daily Vitamins Suggestions</Text>
       <FlatList
         data={vitaminNames}
@@ -89,7 +97,7 @@ const VitaminPage = ({ route, navigation }) => {
 
 const styles = StyleSheet.create({
   titles: {
-    marginTop: 20,
+    marginTop: 60,
     textAlign: "center",
     color: "white",
     fontSize: 36,
@@ -132,6 +140,11 @@ const styles = StyleSheet.create({
   unit: {
     fontSize: 24,
     textAlign: "right",
+  },
+  headerBackButton: {
+    position: "absolute",
+    top: 15,
+    left: 20,
   },
   button: {
     backgroundColor: "#007bff",
