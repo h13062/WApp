@@ -6,7 +6,7 @@ import {
   StyleSheet,
   SafeAreaView,
 } from "react-native";
-import NavigationBar from "../../navigationBar/navigationBar";
+import NavigationBar from "../../navigation/navigationBar";
 const BodyIndex = ({ route, navigation }) => {
   const {
     age,
@@ -149,7 +149,8 @@ const BodyIndex = ({ route, navigation }) => {
       if (ageOption === "months" || (ageOption === "years" && age < 3)) {
         return "BMI does not apply for children less than 3 years old";
       } else {
-        const combinedHeight = (heightMeter * 100 + heightCentimeter) / 100;
+        const combinedHeight =
+          (parseInt(heightMeter * 100) + parseInt(heightCentimeter)) / 100;
         console.log("calculateBMI --> combinedHeight:", combinedHeight);
         console.log("calculateBMI --> weight:", weight);
         const bmi = weight / (combinedHeight * combinedHeight);
@@ -244,7 +245,9 @@ const BodyIndex = ({ route, navigation }) => {
           <Text style={styles.buttonText}>Back</Text>
         </TouchableOpacity>
       </View>
-      <NavigationBar navigation={navigation} routeParams={route.params} />
+      <View style={styles.navbarContainer}>
+        <NavigationBar navigation={navigation} routeParams={route.params} />
+      </View>
     </SafeAreaView>
   );
 };
@@ -303,6 +306,10 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "center",
     marginBottom: 40, // Increase the marginBottom to make the white box longer
+  },
+  navbarContainer: {
+    marginLeft: 5,
+    width: "100%",
   },
 });
 

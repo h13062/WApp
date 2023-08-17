@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { getMineralSuggestion } from "./mineralSuggestion/mineralSuggestion";
-import NavigationBar from "../../navigationBar/navigationBar";
+import NavigationBar from "../../navigation/navigationBar";
 
 const MineralPage = ({ route, navigation }) => {
   const mineralNames = [

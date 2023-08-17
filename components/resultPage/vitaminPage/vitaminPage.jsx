@@ -8,7 +8,8 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { getVitaminSuggestion } from "./vitaminSuggestion/vitaminSuggestion";
-import NavigationBar from "../../navigationBar/navigationBar";
+import NavigationBar from "../../navigation/navigationBar";
+import CustomHeader from "../../navigation/customHeaderButton";
 const VitaminPage = ({ route, navigation }) => {
   const vitaminNames = [
     "A",
@@ -24,7 +25,7 @@ const VitaminPage = ({ route, navigation }) => {
     "B8",
     "B9",
     "B12",
-    "Choline",
+    // "Choline",
   ];
 
   const getVitaminUnit = (vitamin) => {
@@ -42,7 +43,7 @@ const VitaminPage = ({ route, navigation }) => {
       B8: "μg/d",
       B9: "μg/d",
       B12: "μg/d",
-      Choline: "mg/d",
+      //   Choline: "mg/d",
     };
 
     return unitMap[vitamin] || "";
@@ -62,7 +63,7 @@ const VitaminPage = ({ route, navigation }) => {
 
     return (
       <View style={styles.item}>
-        <Text style={styles.vitaminName}>{item}:</Text>
+        <Text style={styles.vitaminName}> Vitamin {item}:</Text>
         <View style={styles.suggestionContainer}>
           <Text style={styles.suggestion}>{suggestion}</Text>
           <Text style={styles.unit}>{unit}</Text>
