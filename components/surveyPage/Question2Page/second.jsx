@@ -20,14 +20,14 @@ const SecondPage = ({ route, navigation }) => {
   const [isMetricMeasurement, setIsMetricMeasurement] = useState(true);
 
   // Measurement in Metric
-  const [heightInMeters, setHeightInMeters] = useState(0);
-  const [heightInCentimeters, setHeightInCentimeters] = useState(0);
-  const [weightInKg, setWeightInKg] = useState(0);
+  const [heightInMeters, setHeightInMeters] = useState(null);
+  const [heightInCentimeters, setHeightInCentimeters] = useState(null);
+  const [weightInKg, setWeightInKg] = useState(null);
 
   // Measurement in Imperial
-  const [heightInFeet, setHeightInFeet] = useState(0);
-  const [heightInInches, setHeightInInches] = useState(0);
-  const [weightInLbs, setWeightInLbs] = useState(0);
+  const [heightInFeet, setHeightInFeet] = useState(null);
+  const [heightInInches, setHeightInInches] = useState(null);
+  const [weightInLbs, setWeightInLbs] = useState(null);
 
   const [weightUnit, setWeightUnit] = useState("kg");
 
@@ -36,8 +36,6 @@ const SecondPage = ({ route, navigation }) => {
   const [outputWeight, setOutputWeight] = useState(0);
 
   const handleSubmit = () => {
-    convertHeightToMetric();
-    convertWeightToKg();
     console.log("Submitted parameters:", {
       heightMeter: heightInMeters,
       heightCentimeter: heightInCentimeters,
@@ -82,31 +80,54 @@ const SecondPage = ({ route, navigation }) => {
   };
 
   const convertWeightToKg = () => {
-    if (weightInLbs > 0) {
+    if (weightInLbs) {
       const kilograms = weightInLbs * 0.45359237;
       setWeightInKg(kilograms.toFixed(2));
+    } else {
+      setWeightInKg(null);
     }
   };
 
   const convertWeightToLbs = () => {
-    if (weightInKg > 0) {
+    if (weightInKg) {
       const pounds = weightInKg / 0.45359237;
       setWeightInLbs(pounds.toFixed(2));
+    } else {
+      setWeightInLbs(null);
     }
   };
 
   const onMetricClick = () => {
     setIsMetricMeasurement(true);
-    convertHeightToMetric();
-    convertWeightToKg();
     setWeightUnit("kg");
   };
 
   const onImperialClick = () => {
     setIsMetricMeasurement(false);
-    convertHeightToImperial();
-    convertWeightToLbs();
     setWeightUnit("lbs");
+  };
+
+  useEffect(() => {
+    if (isMetricMeasurement) {
+      convertHeightToImperial();
+      convertWeightToLbs();
+    } else {
+      convertHeightToMetric();
+      convertWeightToKg();
+    }
+  }, [
+    heightInMeters,
+    heightInCentimeters,
+    heightInFeet,
+    heightInInches,
+    weightInKg,
+    weightInLbs,
+  ]);
+
+  const isSubmitButtonDisable = () => {
+    if (heightInMeters && heightInCentimeters && weightInKg) return false;
+
+    return true;
   };
 
   return (
@@ -169,9 +190,7 @@ const SecondPage = ({ route, navigation }) => {
                         <TextInput
                           placeholder="Meters"
                           value={
-                            heightInMeters !== 0
-                              ? heightInMeters.toString()
-                              : ""
+                            heightInMeters ? heightInMeters.toString() : ""
                           }
                           onChangeText={(text) => setHeightInMeters(text)}
                           style={[styles.input, styles.smallInput]}
@@ -181,7 +200,7 @@ const SecondPage = ({ route, navigation }) => {
                         <TextInput
                           placeholder="Centimeters"
                           value={
-                            heightInCentimeters !== 0
+                            heightInCentimeters
                               ? heightInCentimeters.toString()
                               : ""
                           }
@@ -195,9 +214,7 @@ const SecondPage = ({ route, navigation }) => {
                       <>
                         <TextInput
                           placeholder="Feet"
-                          value={
-                            heightInFeet !== 0 ? heightInFeet.toString() : ""
-                          }
+                          value={heightInFeet ? heightInFeet.toString() : ""}
                           onChangeText={(text) => {
                             setHeightInFeet(text);
                           }}
@@ -208,9 +225,7 @@ const SecondPage = ({ route, navigation }) => {
                         <TextInput
                           placeholder="Inches"
                           value={
-                            heightInInches !== 0
-                              ? heightInInches.toString()
-                              : ""
+                            heightInInches ? heightInInches.toString() : ""
                           }
                           onChangeText={(text) => {
                             setHeightInInches(text);
@@ -231,10 +246,10 @@ const SecondPage = ({ route, navigation }) => {
                       placeholder={isMetricMeasurement ? "kg" : "lbs"}
                       value={
                         isMetricMeasurement
-                          ? weightInKg !== 0
+                          ? weightInKg
                             ? weightInKg.toString()
                             : ""
-                          : weightInLbs !== 0
+                          : weightInLbs
                           ? weightInLbs.toString()
                           : ""
                       }
@@ -262,15 +277,14 @@ const SecondPage = ({ route, navigation }) => {
                 >
                   <Text style={styles.buttonText}>Back</Text>
                 </TouchableOpacity>
-
                 <TouchableOpacity
                   onPress={handleSubmit}
                   style={[
                     styles.button,
                     styles.buttonBoth,
-                    styles.disabledButton,
+                    isSubmitButtonDisable() ? styles.disabledButton : null,
                   ]}
-                  disabled={false}
+                  disabled={isSubmitButtonDisable()}
                 >
                   <Text style={styles.buttonText}>Next</Text>
                 </TouchableOpacity>

@@ -35,7 +35,7 @@ const SeventhPage = ({ route, navigation }) => {
     <SafeAreaView style={styles.safeArea}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.container}>
-          <Text style={styles.title}>Sleep and Exercise</Text>
+          <Text style={styles.title}>Daily Activity</Text>
           <View style={styles.whiteBox}>
             <TextInput
               style={styles.inputField}
