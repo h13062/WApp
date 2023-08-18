@@ -10,10 +10,10 @@ import {
   Platform,
   TouchableWithoutFeedback,
   Keyboard,
+  Alert,
 } from "react-native";
-import { measure, set } from "react-native-reanimated";
 import { SafeAreaView } from "react-native";
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
 const SecondPage = ({ route, navigation }) => {
   const { username } = route.params;
 
@@ -34,13 +34,50 @@ const SecondPage = ({ route, navigation }) => {
   // Output parameter to throw to other component
   const [outputHeight, setOutputHeight] = useState(0);
   const [outputWeight, setOutputWeight] = useState(0);
+  const [showHeightWeightAlert, setShowHeightWeightAlert] = useState(false);
+  useEffect(() => {
+    // Retrieve stored data when the component mounts
+    const fetchStoredData = async () => {
+      try {
+        const storedData = await AsyncStorage.getItem("secondPageData");
+        if (storedData) {
+          const parsedData = JSON.parse(storedData);
+          setHeightInMeters(parsedData.heightInMeters);
+          setHeightInCentimeters(parsedData.heightInCentimeters);
+          setWeightInKg(parsedData.weightInKg);
+        }
+      } catch (error) {
+        console.error("Error fetching stored data:", error);
+      }
+    };
 
-  const handleSubmit = () => {
-    console.log("Submitted parameters:", {
-      heightMeter: heightInMeters,
-      heightCentimeter: heightInCentimeters,
-      weight: weightInKg,
-    });
+    fetchStoredData();
+  }, []); // Empty dependency array ensures this effect runs only once
+  const handleSubmit = async () => {
+    if (isMetricMeasurement) {
+      if (!heightInMeters || !heightInCentimeters || !weightInKg) {
+        setShowHeightWeightAlert(true);
+        return;
+      }
+    } else {
+      if (!heightInFeet || !heightInInches || !weightInLbs) {
+        setShowHeightWeightAlert(true);
+        return;
+      }
+    }
+    try {
+      await AsyncStorage.setItem(
+        "secondPageData",
+        JSON.stringify({
+          heightInMeters,
+          heightInCentimeters,
+          weightInKg,
+        })
+      );
+      console.log("Second page data saved successfully!");
+    } catch (error) {
+      console.error("Error saving second page data:", error);
+    }
     navigation.navigate("ThirdPage", {
       ...route.params,
       username,
@@ -282,13 +319,26 @@ const SecondPage = ({ route, navigation }) => {
                   style={[
                     styles.button,
                     styles.buttonBoth,
-                    isSubmitButtonDisable() ? styles.disabledButton : null,
+                    //isSubmitButtonDisable() ? styles.disabledButton : null,
                   ]}
-                  disabled={isSubmitButtonDisable()}
+                  disabled={false}
                 >
                   <Text style={styles.buttonText}>Next</Text>
                 </TouchableOpacity>
               </View>
+              {showHeightWeightAlert && (
+                <View style={styles.alertBackdrop}>
+                  <Text style={styles.alertText}>
+                    Please enter your height and weight.
+                  </Text>
+                  <TouchableOpacity
+                    style={styles.alertButton}
+                    onPress={() => setShowHeightWeightAlert(false)}
+                  >
+                    <Text style={styles.alertButtonText}>OK</Text>
+                  </TouchableOpacity>
+                </View>
+              )}
             </ScrollView>
           </KeyboardAvoidingView>
         </SafeAreaView>
@@ -425,6 +475,38 @@ const styles = StyleSheet.create({
     color: "red",
     marginTop: 5,
     fontSize: 16,
+  },
+  alertBackdrop: {
+    backgroundColor: "rgba(0, 0, 0, 0.8)",
+    position: "absolute",
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    justifyContent: "center",
+    alignItems: "center",
+    zIndex: 999,
+  },
+  // Styling for the alert text
+  alertText: {
+    fontSize: 27,
+    fontWeight: "bold",
+    color: "white",
+    marginBottom: 20,
+    textAlign: "center",
+  },
+  // Styling for the alert button
+  alertButton: {
+    backgroundColor: "#007bff",
+    borderRadius: 27,
+    paddingVertical: 20,
+    paddingHorizontal: 50,
+  },
+  // Styling for the alert button text
+  alertButtonText: {
+    color: "white",
+    fontSize: 22,
+    fontWeight: "bold",
   },
 });
 
