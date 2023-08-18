@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
+  TextInput,
   TouchableOpacity,
   StyleSheet,
   SafeAreaView,
@@ -11,6 +12,8 @@ import DropDownPicker from "react-native-dropdown-picker";
 const FifthPage = ({ route, navigation }) => {
   const [selectedConditions, setSelectedConditions] = useState([]);
   const [openConditions, setOpenConditions] = useState(false);
+  const [otherCondition, setOtherCondition] = useState("");
+  const [showOtherTextBox, setShowOtherTextBox] = useState(false);
 
   const conditionOptions = [
     "No precondition",
@@ -20,22 +23,25 @@ const FifthPage = ({ route, navigation }) => {
     "Diabetes",
     "Back Pain",
     "Hair Loss",
+    "Others",
   ];
 
   useEffect(() => {
-    // console.log(selectedVitamins);
     setSelectedConditions(
       selectedConditions.includes("No precondition") ? [] : selectedConditions
     );
-    selectedConditions;
+    setShowOtherTextBox(selectedConditions.includes("Others"));
   }, [selectedConditions]);
 
   const handleSubmit = () => {
     navigation.navigate("SixthPage", {
       ...route.params,
       selectedConditions,
+      otherCondition: showOtherTextBox ? otherCondition : undefined,
     });
   };
+
+  const dropdownMarginBottom = openConditions ? 320 : 20;
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -54,7 +60,10 @@ const FifthPage = ({ route, navigation }) => {
             maxHeight={300}
             placeholder="No precondition"
             placeholderStyle={{ fontSize: 24 }}
-            containerStyle={styles.dropdownContainer}
+            containerStyle={[
+              styles.dropdownContainer,
+              { marginBottom: dropdownMarginBottom },
+            ]}
             showTickIcon={true}
             dropDownDirection="BOTTOM"
             multiple={true}
@@ -62,6 +71,14 @@ const FifthPage = ({ route, navigation }) => {
             textStyle={styles.menuTitle}
             labelStyle={{ fontSize: 24 }}
           />
+          {showOtherTextBox && (
+            <TextInput
+              style={styles.otherTextBox}
+              placeholder="Enter other condition..."
+              value={otherCondition}
+              onChangeText={setOtherCondition}
+            />
+          )}
         </View>
 
         <View style={styles.buttonContainer}>
@@ -87,9 +104,9 @@ const FifthPage = ({ route, navigation }) => {
 
 const styles = StyleSheet.create({
   safeArea: {
-    flex: 1, // Ensure the SafeAreaView takes up the entire screen
+    flex: 1,
     backgroundColor:
-      "linear-gradient(0deg, rgba(0,32,76,1) 0%, rgba(163,224,247,1) 100%)", // Set your desired background color
+      "linear-gradient(0deg, rgba(0,32,76,1) 0%, rgba(163,224,247,1) 100%)",
   },
   container: {
     flex: 1,
@@ -110,7 +127,17 @@ const styles = StyleSheet.create({
     width: "100%",
     marginTop: 20,
   },
+  otherTextBox: {
+    width: "100%",
+    marginTop: 10,
+    paddingHorizontal: 10,
+    paddingVertical: 8,
+    fontSize: 20,
+    backgroundColor: "#fff",
+    borderRadius: 10,
+  },
   buttonContainer: {
+    marginTop: 350,
     flexDirection: "row",
     justifyContent: "space-between",
     marginTop: 50,

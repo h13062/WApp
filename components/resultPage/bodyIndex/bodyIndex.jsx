@@ -231,6 +231,7 @@ const BodyIndex = ({ route, navigation }) => {
         </Text>
         <View style={styles.whiteBox}>
           <Text style={styles.infoText}>BMI: {bmi}</Text>
+          <Text>Healthy BMI will range from 18.5 to 25 </Text>
           <Text style={styles.infoText}>
             Calories to maintain weight: {calories}
           </Text>
