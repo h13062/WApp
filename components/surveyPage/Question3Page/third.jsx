@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -7,14 +7,14 @@ import {
   StyleSheet,
   SafeAreaView,
 } from "react-native";
-
-// Import checkbox icon from your chosen library
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { FontAwesome } from "@expo/vector-icons";
 
 const ThirdPage = ({ route, navigation }) => {
   const [dietPreferences, setDietPreferences] = useState([]);
   const [noSpecificReferenceSelected, setNoSpecificReferenceSelected] =
     useState(false);
+  const [showDietAlert, setShowDietAlert] = useState(false);
 
   const options = [
     { label: "Vegetarian", value: "vegetarian" },
@@ -51,7 +51,39 @@ const ThirdPage = ({ route, navigation }) => {
     return dietPreferences.includes(optionValue);
   };
 
-  const handleSubmit = () => {
+  useEffect(() => {
+    const fetchDietPreferences = async () => {
+      try {
+        const storedDietPreferences = await AsyncStorage.getItem(
+          "dietPreferences"
+        );
+        if (storedDietPreferences) {
+          setDietPreferences(JSON.parse(storedDietPreferences));
+        }
+      } catch (error) {
+        console.error("Error fetching diet preferences:", error);
+      }
+    };
+
+    fetchDietPreferences();
+  }, []);
+
+  const handleSubmit = async () => {
+    try {
+      await AsyncStorage.setItem(
+        "dietPreferences",
+        JSON.stringify(dietPreferences)
+      );
+      console.log("Diet preferences saved successfully!");
+    } catch (error) {
+      console.error("Error saving diet preferences:", error);
+    }
+
+    if (!dietPreferences.length) {
+      setShowDietAlert(true);
+      return;
+    }
+
     navigation.navigate("FourthPage", {
       ...route.params,
       dietPreferences,
@@ -101,30 +133,26 @@ const ThirdPage = ({ route, navigation }) => {
             <Text style={styles.buttonText}>Back</Text>
           </TouchableOpacity>
           <View style={styles.nextButton}>
-            <TouchableOpacity
-              style={[
-                styles.button,
-                (!dietPreferences.length ||
-                  (noSpecificReferenceSelected &&
-                    dietPreferences[0] !== "noSpecificReference")) &&
-                  styles.disabledButton,
-              ]}
-              onPress={handleSubmit}
-              disabled={
-                !dietPreferences.length ||
-                (noSpecificReferenceSelected &&
-                  dietPreferences[0] !== "noSpecificReference")
-              }
-            >
+            <TouchableOpacity style={styles.button} onPress={handleSubmit}>
               <Text style={styles.buttonText}>Next</Text>
             </TouchableOpacity>
           </View>
         </View>
       </ScrollView>
+      {showDietAlert && (
+        <View style={styles.alertBackdrop}>
+          <Text style={styles.alertText}>Please select a diet preference.</Text>
+          <TouchableOpacity
+            style={styles.alertButton}
+            onPress={() => setShowDietAlert(false)}
+          >
+            <Text style={styles.alertButtonText}>OK</Text>
+          </TouchableOpacity>
+        </View>
+      )}
     </SafeAreaView>
   );
 };
-
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1, // Ensure the SafeAreaView takes up the entire screen
@@ -206,6 +234,35 @@ const styles = StyleSheet.create({
   },
   nextButton: {
     marginLeft: 20,
+  },
+  alertBackdrop: {
+    backgroundColor: "rgba(0, 0, 0, 0.8)",
+    position: "absolute",
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    justifyContent: "center",
+    alignItems: "center",
+    zIndex: 999,
+  },
+  alertText: {
+    fontSize: 27,
+    fontWeight: "bold",
+    color: "white",
+    marginBottom: 20,
+    textAlign: "center",
+  },
+  alertButton: {
+    backgroundColor: "#007bff",
+    borderRadius: 27,
+    paddingVertical: 20,
+    paddingHorizontal: 50,
+  },
+  alertButtonText: {
+    color: "white",
+    fontSize: 22,
+    fontWeight: "bold",
   },
 });
 

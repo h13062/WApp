@@ -30,7 +30,6 @@ const FourthPage = ({ route, navigation }) => {
     { label: "Vitamin B12", value: "Vitamin B12" },
     { label: "Pantothenic Acid", value: "Pantothenic Acid" },
     { label: "Biotin", value: "Biotin" },
-    { label: "Choline", value: "Choline" },
   ];
   //   console.log("Selected Vitamins:", selectedVitamins);
   //   console.log("Selected Minerals:", selectedMinerals);

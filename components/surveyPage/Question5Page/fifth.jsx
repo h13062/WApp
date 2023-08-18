@@ -9,7 +9,7 @@ import {
   SafeAreaView,
 } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
 const FifthPage = ({ route, navigation }) => {
   const [selectedConditions, setSelectedConditions] = useState([]);
   const [openConditions, setOpenConditions] = useState(false);
@@ -34,7 +34,50 @@ const FifthPage = ({ route, navigation }) => {
     setShowOtherTextBox(selectedConditions.includes("Others"));
   }, [selectedConditions]);
 
-  const handleSubmit = () => {
+  useEffect(() => {
+    const fetchHealthConditions = async () => {
+      try {
+        const storedSelectedConditions = await AsyncStorage.getItem(
+          "selectedConditions"
+        );
+        const storedOtherCondition = await AsyncStorage.getItem(
+          "otherCondition"
+        );
+
+        if (storedSelectedConditions) {
+          setSelectedConditions(JSON.parse(storedSelectedConditions));
+        }
+        if (storedOtherCondition) {
+          setOtherCondition(storedOtherCondition);
+        }
+      } catch (error) {
+        console.error("Error fetching health conditions:", error);
+      }
+    };
+
+    fetchHealthConditions();
+  }, []);
+
+  const handleSubmit = async () => {
+    // Store selectedConditions in AsyncStorage
+    try {
+      await AsyncStorage.setItem(
+        "selectedConditions",
+        JSON.stringify(selectedConditions)
+      );
+      console.log("Selected conditions saved successfully!");
+
+      if (showOtherTextBox) {
+        await AsyncStorage.setItem(
+          "otherCondition",
+          JSON.stringify(otherCondition)
+        );
+        console.log("Other condition saved successfully!");
+      }
+    } catch (error) {
+      console.error("Error saving health conditions:", error);
+    }
+
     navigation.navigate("SixthPage", {
       ...route.params,
       selectedConditions,
