@@ -231,7 +231,9 @@ const BodyIndex = ({ route, navigation }) => {
         </Text>
         <View style={styles.whiteBox}>
           <Text style={styles.infoText}>BMI: {bmi}</Text>
-          <Text style={styles.infoText}>Calories: {calories}</Text>
+          <Text style={styles.infoText}>
+            Calories to maintain weight: {calories}
+          </Text>
           <Text style={styles.infoText}>
             Calories to lose weight: {(parseFloat(calories) - 500).toFixed(2)}
           </Text>

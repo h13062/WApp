@@ -8,6 +8,9 @@ import {
   SafeAreaView,
 } from "react-native";
 
+// Import checkbox icon from your chosen library
+import { FontAwesome } from "@expo/vector-icons";
+
 const ThirdPage = ({ route, navigation }) => {
   const [dietPreferences, setDietPreferences] = useState([]);
   const [noSpecificReferenceSelected, setNoSpecificReferenceSelected] =
@@ -44,14 +47,16 @@ const ThirdPage = ({ route, navigation }) => {
     }
   };
 
+  const isChecked = (optionValue) => {
+    return dietPreferences.includes(optionValue);
+  };
+
   const handleSubmit = () => {
     navigation.navigate("FourthPage", {
       ...route.params,
       dietPreferences,
     });
   };
-
-  console.log("Selected Options:", dietPreferences);
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -63,18 +68,22 @@ const ThirdPage = ({ route, navigation }) => {
               key={option.value}
               style={[
                 styles.option,
-                dietPreferences.includes(option.value) && styles.selectedOption,
+                isChecked(option.value) && styles.selectedOption,
                 noSpecificReferenceSelected &&
                   option.value !== "noSpecificReference" &&
                   styles.disabledOption,
               ]}
               onPress={() => handleOptionSelect(option.value)}
             >
+              {isChecked(option.value) ? (
+                <FontAwesome name="check-square-o" size={24} color="#007bff" />
+              ) : (
+                <FontAwesome name="square-o" size={24} color="#007bff" />
+              )}
               <Text
                 style={[
                   styles.optionText,
-                  dietPreferences.includes(option.value) &&
-                    styles.selectedOptionText,
+                  isChecked(option.value) && styles.selectedOptionText,
                 ]}
               >
                 {option.label}
@@ -151,15 +160,19 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   optionText: {
-    fontSize: 24, // Change the option text size here
+    fontSize: 24,
     marginBottom: 20,
   },
   selectedOption: {
-    backgroundColor: "#007bff",
-    color: "#fff",
+    flexDirection: "row",
+    alignItems: "center",
+    paddingVertical: 8,
+    width: "100%",
   },
   selectedOptionText: {
-    color: "white", // Change the text color of selected options
+    color: "#007bff",
+    fontSize: 24,
+    marginLeft: 10,
   },
   disabledOption: {
     opacity: 0.5,
