@@ -22,11 +22,15 @@ const SixthPage = ({ route, navigation }) => {
     "Lactating - over 7 months",
   ];
 
+  const gender = route.params.gender; // Assuming gender is passed in route params
+
   const handleSubmit = () => {
     // Perform any necessary actions before navigating
     navigation.navigate("SeventhPage", { ...route.params, selectedOption });
   };
-  console.log("six page: ", selectedOption);
+
+  const isDisabled = gender === "male"; // Determine if the menu should be disabled
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
@@ -39,14 +43,21 @@ const SixthPage = ({ route, navigation }) => {
             value={selectedOption}
             setValue={setSelectedOption}
             maxHeight={300}
-            placeholder="No Pregnant or Lactating"
+            placeholder="Please select Pregnant or Lactating status "
             placeholderStyle={{ fontSize: 24 }}
             containerStyle={styles.dropdownContainer}
             showTickIcon={true}
             dropDownDirection="BOTTOM"
             textStyle={styles.menuTitle}
             labelStyle={{ fontSize: 24 }}
+            disabled={isDisabled} // Set the disabled prop
           />
+          {isDisabled && (
+            <Text style={styles.warningText}>
+              This option is only applicable to female users. Please press Next
+              to continue.
+            </Text>
+          )}
         </View>
 
         <View style={styles.buttonContainer}>
@@ -72,9 +83,9 @@ const SixthPage = ({ route, navigation }) => {
 
 const styles = StyleSheet.create({
   safeArea: {
-    flex: 1, // Ensure the SafeAreaView takes up the entire screen
+    flex: 1,
     backgroundColor:
-      "linear-gradient(0deg, rgba(0,32,76,1) 0%, rgba(163,224,247,1) 100%)", // Set your desired background color
+      "linear-gradient(0deg, rgba(0,32,76,1) 0%, rgba(163,224,247,1) 100%)",
   },
   container: {
     flex: 1,
@@ -118,6 +129,12 @@ const styles = StyleSheet.create({
   },
   menuTitle: {
     fontSize: 20,
+  },
+  warningText: {
+    color: "white",
+    fontSize: 16,
+    marginTop: 10,
+    textAlign: "center",
   },
 });
 

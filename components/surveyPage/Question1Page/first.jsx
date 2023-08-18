@@ -17,11 +17,13 @@ const FirstPage = ({ navigation }) => {
   const [gender, setGender] = useState("male");
   const [age, setAge] = useState("");
   const [ageOption, setAgeOption] = useState("years");
+  const [showAgeAlert, setShowAgeAlert] = useState(false);
 
   const handleSubmit = async () => {
-    console.log("Name:", name);
-    console.log("Gender:", gender);
-    console.log("Age:", age, ageOption);
+    if (ageOption === "years" && (age === "" || parseInt(age) <= 0)) {
+      setShowAgeAlert(true);
+      return;
+    }
 
     try {
       await AsyncStorage.setItem(
@@ -74,6 +76,7 @@ const FirstPage = ({ navigation }) => {
         >
           <Text style={styles.title}>Let us know about each other</Text>
           <View style={styles.whiteBox}>
+            {/* Name */}
             <View style={styles.questionContainer}>
               <Text style={styles.label}>Name</Text>
               <TextInput
@@ -84,6 +87,7 @@ const FirstPage = ({ navigation }) => {
               />
             </View>
 
+            {/* Gender */}
             <View style={styles.questionContainer}>
               <Text style={styles.label}>Gender</Text>
               <View style={styles.radioContainer}>
@@ -123,6 +127,7 @@ const FirstPage = ({ navigation }) => {
               </View>
             </View>
 
+            {/* Age */}
             <View style={styles.questionContainer}>
               <Text style={styles.label}>Age (in years)</Text>
               <View style={styles.radioContainer}>
@@ -164,6 +169,7 @@ const FirstPage = ({ navigation }) => {
             </View>
           </View>
 
+          {/* Next Button */}
           <View style={styles.buttonContainer}>
             <TouchableOpacity
               onPress={handleSubmit}
@@ -184,6 +190,21 @@ const FirstPage = ({ navigation }) => {
               <Text style={styles.buttonText}>Next</Text>
             </TouchableOpacity>
           </View>
+
+          {/* Age Alert */}
+          {showAgeAlert && (
+            <View style={styles.ageAlert}>
+              <Text style={styles.ageAlertText}>
+                Please enter your age before proceeding.
+              </Text>
+              <TouchableOpacity
+                style={styles.ageAlertButton}
+                onPress={() => setShowAgeAlert(false)}
+              >
+                <Text style={styles.ageAlertButtonText}>OK</Text>
+              </TouchableOpacity>
+            </View>
+          )}
         </KeyboardAvoidingView>
       </TouchableWithoutFeedback>
     </SafeAreaView>
@@ -296,6 +317,36 @@ const styles = StyleSheet.create({
     backgroundColor: "#007bff",
     marginLeft: 12,
     marginRight: 16,
+  },
+
+  ageAlert: {
+    backgroundColor: "rgba(0, 0, 0, 0.8)",
+    position: "absolute",
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    justifyContent: "center",
+    alignItems: "center",
+    zIndex: 999,
+  },
+  ageAlertText: {
+    fontSize: 27,
+    fontWeight: "bold",
+    color: "white",
+    marginBottom: 20,
+    textAlign: "center",
+  },
+  ageAlertButton: {
+    backgroundColor: "#007bff",
+    borderRadius: 27,
+    paddingVertical: 20,
+    paddingHorizontal: 50,
+  },
+  ageAlertButtonText: {
+    color: "white",
+    fontSize: 22,
+    fontWeight: "bold",
   },
 });
 

@@ -4,6 +4,7 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
+  TouchableWithoutFeedback,
   StyleSheet,
   SafeAreaView,
 } from "react-native";
@@ -45,9 +46,9 @@ const FifthPage = ({ route, navigation }) => {
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <View style={styles.container}>
-        <Text style={styles.title}>Health Conditions</Text>
-        <View style={{ zIndex: 999 }}>
+      <TouchableWithoutFeedback onPress={() => setOpenConditions(false)}>
+        <View style={styles.container}>
+          <Text style={styles.title}>Health Conditions</Text>
           <DropDownPicker
             items={conditionOptions.map((condition) => ({
               label: condition,
@@ -79,25 +80,25 @@ const FifthPage = ({ route, navigation }) => {
               onChangeText={setOtherCondition}
             />
           )}
-        </View>
 
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => {
-              navigation.goBack();
-            }}
-          >
-            <Text style={styles.buttonText}>Back</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[styles.button, styles.activeButton]}
-            onPress={handleSubmit}
-          >
-            <Text style={styles.buttonText}>Next</Text>
-          </TouchableOpacity>
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => {
+                navigation.goBack();
+              }}
+            >
+              <Text style={styles.buttonText}>Back</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.button, styles.activeButton]}
+              onPress={handleSubmit}
+            >
+              <Text style={styles.buttonText}>Next</Text>
+            </TouchableOpacity>
+          </View>
         </View>
-      </View>
+      </TouchableWithoutFeedback>
     </SafeAreaView>
   );
 };
