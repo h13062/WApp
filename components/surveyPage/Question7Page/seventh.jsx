@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -10,20 +10,53 @@ import {
   Keyboard,
 } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const SeventhPage = ({ route, navigation }) => {
   const [sleepHours, setSleepHours] = useState("");
   const [exerciseFactor, setExerciseFactor] = useState(1.2); // Default value
   const [openConditions, setOpenConditions] = useState(false);
   const exerciseOptions = [
-    { label: "Little/no exercise", value: 1.2 },
-    { label: "Light exercise", value: 1.375 },
-    { label: "Moderate exercise", value: 1.55 },
-    { label: "Heavy exercise", value: 1.725 },
+    { label: "0 - 1 hour hours/week", value: 1.2 },
+    { label: "2 - 3 hours hours/week", value: 1.375 },
+    { label: "3 - 5 hours hours/week", value: 1.55 },
+    { label: "More than 5 hours/week", value: 1.725 },
   ];
 
-  const handleSubmit = () => {
-    // Perform any necessary actions before navigating
+  useEffect(() => {
+    const fetchUserInputs = async () => {
+      try {
+        const storedSleepHours = await AsyncStorage.getItem("sleepHours");
+        const storedExerciseFactor = await AsyncStorage.getItem(
+          "exerciseFactor"
+        );
+
+        if (storedSleepHours) {
+          setSleepHours(storedSleepHours);
+        }
+
+        if (storedExerciseFactor) {
+          setExerciseFactor(parseFloat(storedExerciseFactor));
+        }
+      } catch (error) {
+        console.error("Error fetching user inputs:", error);
+      }
+    };
+
+    fetchUserInputs();
+  }, []);
+
+  const handleSubmit = async () => {
+    try {
+      // Save user inputs to AsyncStorage
+      await AsyncStorage.setItem("sleepHours", sleepHours);
+      await AsyncStorage.setItem("exerciseFactor", exerciseFactor.toString());
+
+      console.log("sleep hours and exerciseFactor saved successfully!");
+    } catch (error) {
+      console.error("Error saving user inputs:", error);
+    }
+
     navigation.navigate("BodyIndex", {
       ...route.params,
       sleepHours,

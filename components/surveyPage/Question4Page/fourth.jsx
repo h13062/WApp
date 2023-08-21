@@ -8,6 +8,7 @@ import {
   SafeAreaView,
 } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const FourthPage = ({ route, navigation }) => {
   const [selectedVitamins, setSelectedVitamins] = useState([]);
@@ -53,6 +54,27 @@ const FourthPage = ({ route, navigation }) => {
   ];
 
   useEffect(() => {
+    const fetchUserInputs = async () => {
+      try {
+        const storedVitamins = await AsyncStorage.getItem("selectedVitamins");
+        const storedMinerals = await AsyncStorage.getItem("selectedMinerals");
+
+        if (storedVitamins) {
+          setSelectedVitamins(JSON.parse(storedVitamins));
+        }
+
+        if (storedMinerals) {
+          setSelectedMinerals(JSON.parse(storedMinerals));
+        }
+      } catch (error) {
+        console.error("Error fetching user inputs:", error);
+      }
+    };
+
+    fetchUserInputs();
+  }, []);
+
+  useEffect(() => {
     // console.log(selectedVitamins);
     setSelectedVitamins(
       selectedVitamins.includes("No Vitamin Deficiencies")
@@ -70,15 +92,28 @@ const FourthPage = ({ route, navigation }) => {
     );
   }, [selectedMinerals]);
 
-  const handleSubmit = () => {
-    // Perform any necessary actions before navigating
+  const handleSubmit = async () => {
+    try {
+      await AsyncStorage.setItem(
+        "selectedVitamins",
+        JSON.stringify(selectedVitamins)
+      );
+      await AsyncStorage.setItem(
+        "selectedMinerals",
+        JSON.stringify(selectedMinerals)
+      );
+
+      console.log("User inputs saved successfully!");
+    } catch (error) {
+      console.error("Error saving user inputs:", error);
+    }
+
     navigation.navigate("FifthPage", {
       ...route.params,
       selectedVitamins,
       selectedMinerals,
     });
   };
-
   const mineralsDropdownMarginTop = 10;
   const [mineralsDropdownZIndex, setMineralsDropdownIndex] = useState(0);
   const [vitaminDropdownZIndex, setVitaminDropdownIndex] = useState(0);

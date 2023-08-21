@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -6,6 +6,7 @@ import {
   StyleSheet,
   SafeAreaView,
 } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage"; // Import AsyncStorage
 import DropDownPicker from "react-native-dropdown-picker";
 
 const SixthPage = ({ route, navigation }) => {
@@ -22,14 +23,37 @@ const SixthPage = ({ route, navigation }) => {
     "Lactating - over 7 months",
   ];
 
-  const gender = route.params.gender; // Assuming gender is passed in route params
+  const gender = route.params.gender;
 
-  const handleSubmit = () => {
-    // Perform any necessary actions before navigating
+  useEffect(() => {
+    const fetchSelectedOption = async () => {
+      try {
+        const storedSelectedOption = await AsyncStorage.getItem(
+          "selectedOption"
+        );
+        if (storedSelectedOption) {
+          setSelectedOption(storedSelectedOption);
+        }
+      } catch (error) {
+        console.error("Error fetching selected option:", error);
+      }
+    };
+
+    fetchSelectedOption();
+  }, []);
+
+  const handleSubmit = async () => {
+    try {
+      await AsyncStorage.setItem("selectedOption", selectedOption);
+      console.log("Selected option saved successfully!");
+    } catch (error) {
+      console.error("Error saving selected option:", error);
+    }
+
     navigation.navigate("SeventhPage", { ...route.params, selectedOption });
   };
 
-  const isDisabled = gender === "male"; // Determine if the menu should be disabled
+  const isDisabled = gender === "male";
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -50,7 +74,7 @@ const SixthPage = ({ route, navigation }) => {
             dropDownDirection="BOTTOM"
             textStyle={styles.menuTitle}
             labelStyle={{ fontSize: 24 }}
-            disabled={isDisabled} // Set the disabled prop
+            disabled={isDisabled}
           />
           {isDisabled && (
             <Text style={styles.warningText}>
